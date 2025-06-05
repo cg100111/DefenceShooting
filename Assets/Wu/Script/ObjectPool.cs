@@ -1,49 +1,83 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
     /// <summary>
-    /// ƒGƒlƒ~[ƒTƒ“ƒvƒ‹
+    /// ã‚¨ãƒãƒŸãƒ¼ã‚µãƒ³ãƒ—ãƒ«
     /// </summary>
-    public GameObject EnemyPrefab;
+    public GameObject enemyPrefab;
 
     /// <summary>
-    /// “¯‚ÉoŒ»‚·‚é“G‚ÌÅ‘å”
+    /// åŒæ™‚ã«å‡ºç¾ã™ã‚‹æ•µã®æœ€å¤§æ•°
     /// </summary>
     [SerializeField]
     private int MAX_ENEMY;
 
+    /// <summary>
+    /// ç”Ÿæˆã—ãŸæ™‚ã®åˆæœŸä½ç½®
+    /// </summary>
     [SerializeField]
-    private Vector3 InitPos;
-    private List<Enemy> UnUse;
-    private List<Enemy> Used;
+    private Vector3 initPos;
+
+    private List<Enemy> unUse;
+    private List<Enemy> used;
     // Start is called before the first frame update
     void Start()
     {
-        UnUse = new List<Enemy>();
-        Used = new List<Enemy>();
+        unUse = new List<Enemy>();
+        used = new List<Enemy>();
         PrepareEnemies();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void PrepareEnemies()
     {
-        for(int index = 0; index < MAX_ENEMY; index++)
+        for (int index = 0; index < MAX_ENEMY; index++)
         {
-            CreateEnemy();
+            unUse.Add(CreateEnemy());
         }
     }
 
     private Enemy CreateEnemy()
     {
-        GameObject.Instantiate(EnemyPrefab, );
-        return new Enemy();
+        GameObject obj = GameObject.Instantiate(enemyPrefab, initPos, Quaternion.identity, transform);
+        Enemy enemy = obj.GetComponent<Enemy>();
+        Initialized(enemy);
+        return enemy;
+    }
+
+    private void Initialized(Enemy enemy)
+    {
+        enemy.transform.localPosition = initPos;
+    }
+
+    public Enemy Borrow()
+    {
+        if (unUse.Count <= 0)
+        {
+            unUse.Add(CreateEnemy());
+        }
+
+        Enemy enemy = unUse.First();
+        used.Add(enemy);
+        unUse.Remove(enemy);
+
+        return enemy;
+    }
+
+    public void Recycle(Enemy enemy)
+    {
+        Initialized(enemy);
+
+        unUse.Add(enemy);
+        used.Remove(enemy);
     }
 }

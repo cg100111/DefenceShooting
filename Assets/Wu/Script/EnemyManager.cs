@@ -1,29 +1,29 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     /// <summary>
-    /// ¶¬‚·‚éêŠ
+    /// ç”Ÿæˆã™ã‚‹å ´æ‰€
     /// </summary>
     public Transform[] SpawnPositions;
     /// <summary>
-    /// ƒGƒlƒ~[ƒTƒ“ƒvƒ‹
+    /// ã‚¨ãƒãƒŸãƒ¼ã‚µãƒ³ãƒ—ãƒ«
     /// </summary>
     public GameObject EnemyPrefab;
     /// <summary>
-    /// ¶¬‚ÌŠÔŠu
+    /// ç”Ÿæˆã®é–“éš”
     /// </summary>
     [SerializeField]
     private float SpawnDelay;
     /// <summary>
-    /// ¶¬ŠÔŠu‚Ì”ÍˆÍ
+    /// ç”Ÿæˆé–“éš”ã®ç¯„å›²
     /// </summary>
     [SerializeField]
     private float SpawnDelayRange;
     /// <summary>
-    /// ¶¬ƒJƒEƒ“ƒ^[
+    /// ç”Ÿæˆã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
     /// </summary>
     private float SpawnCount;
 
