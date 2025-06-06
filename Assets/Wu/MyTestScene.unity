@@ -230,13 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5ffa09caece824f98352830b126868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnPositions:
-  - {fileID: 1439860111}
-  - {fileID: 1468329339}
-  - {fileID: 729324797}
-  EnemyPrefab: {fileID: 0}
-  SpawnDelay: 1
-  SpawnDelayRange: 0.3
+  spawnDelay: 0
+  spawnDelayRange: 0
 --- !u!4 &806422231
 Transform:
   m_ObjectHideFlags: 0
