@@ -3,18 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PlayerBullet
+  - Enemy
+  - BaseOP
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
+  - Enemy
+  - PlayerBullet
   - 
-  - Enemy_up
-  - Enemy_middle
-  - Enemy_down
+  - 
   - 
   - 
   - 
