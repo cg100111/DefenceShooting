@@ -57,6 +57,8 @@ public class ObjectPool : MonoBehaviour
     private void Initialized(Enemy enemy)
     {
         enemy.transform.localPosition = initPos;
+        enemy.transform.localRotation = Quaternion.identity;
+        enemy.Initialized();
     }
 
     public Enemy Borrow()
