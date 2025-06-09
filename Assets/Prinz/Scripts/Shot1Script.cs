@@ -5,16 +5,17 @@ using UnityEngine;
 public class Shot1Script : MonoBehaviour
 {
     float timer = 0.0f;
+    const float MAXTIMER = 3.0f;
     public void Shoot(Vector3 dir, float spin)
     {
         Vector2 dir2D = new Vector2(dir.x, dir.y);
         GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
-        Debug.Log($"dir : {dir}");
-     //   Vector3 spin = new Vector3(0.0f, 0.0f, (dir.x + dir.y) * 5.0f);
         GetComponent<Rigidbody2D>().AddTorque(spin, ForceMode2D.Impulse);
 
-        //GetComponent<Rigidbody>().AddForce(dir);
+
+     //   Debug.Log($"dir : {dir}");
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +28,7 @@ public class Shot1Script : MonoBehaviour
         timer += Time.deltaTime;
 
 
-        if(timer >= 3.0f)
+        if(timer >= MAXTIMER)
         {
             timer = 0.0f;
             Destroy(gameObject);
