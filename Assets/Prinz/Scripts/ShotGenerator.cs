@@ -11,7 +11,8 @@ public class ShotGenerator : MonoBehaviour
     public GameObject Shot1Prefab;
     public Image BarPowerCurrent;
     public Image BarPowerBase;
-    public const float MAXPOWER = 100;
+    private const float MAXPOWER = 100.0f;
+    private const float MINSPEED = 30.0f;
 
 
     // Start is called before the first frame update
@@ -63,7 +64,7 @@ public class ShotGenerator : MonoBehaviour
 
         // Instantiate the shot
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
-        shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (10 + power), power / 3);
+        shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (MINSPEED + power), power / 3);
 
 
         //--------------DEBUG LOGS-------------------------------

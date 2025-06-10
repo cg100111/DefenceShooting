@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Shot1Script : MonoBehaviour
 {
-    float timer = 0.0f;
-    const float MAXTIMER = 3.0f;
-    public float damageValue = 2.0f;
+    float timer = 0.0f; //bullet timer
+    const float MAXTIMER = 10.0f; //bullet max timer
+    public int damageValue = 2; //bullet damage
     public void Shoot(Vector3 dir, float spin)
     {
         Vector2 dir2D = new Vector2(dir.x, dir.y);
@@ -19,12 +19,33 @@ public class Shot1Script : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-        //    collision.gameObject.HP -= Mathf.Min(1, damageValue);
-            Destroy(gameObject);
+            // Apply damage
+            collision.gameObject.GetComponent<Enemy>().ReduceHP(damageValue);
+
+            // Optional: Knockback (example, simple force away from bullet)
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                Vector2 knockback = collision.transform.position - transform.position;
+                rb.AddForce(knockback.normalized * 1000f); // adjust force value
+            }
+
+            // Destroy bullet (unless you want it to bounce)
+         //   Destroy(gameObject);
         }
     }
+
+    //public void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        //    collision.gameObject.GetComponent<GameObject>().HP -= Mathf.Min(1.0f, damageValue);
+    //        Debug.Log("Bullet has hit");
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     // Start is called before the first frame update
     void Start()

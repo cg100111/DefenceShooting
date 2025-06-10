@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         Inactive();
+        Initialized();
     }
 
     // Update is called once per frame
@@ -81,7 +82,7 @@ public class Enemy : MonoBehaviour
         this.manager = manager;
     }
 
-    private void ReduceHP(int damage)
+    public void ReduceHP(int damage)
     {
         HP -= damage;
         if (HP < 0)
@@ -95,7 +96,9 @@ public class Enemy : MonoBehaviour
         if(collision.gameObject.CompareTag("PlayerBullet"))
         {
             // get Bullet attack power
-            ReduceHP(10);
+            Debug.Log("Enemy was Hit");
+        //    Destroy(gameObject); // destroy bullet
+         //   ReduceHP(10);
         }
     }
 }
