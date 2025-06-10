@@ -41,7 +41,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKey(KeyCode.T))
+        {
+            Active();
+        }
     }
 
     void FixedUpdate()
@@ -73,6 +76,11 @@ public class Enemy : MonoBehaviour
         isActive = false;
     }
 
+    public void SetManager(EnemyManager manager)
+    {
+        this.manager = manager;
+    }
+
     private void ReduceHP(int damage)
     {
         HP -= damage;
@@ -80,15 +88,14 @@ public class Enemy : MonoBehaviour
         {
             HP = 0;
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("PlayerBullet"))
         {
-            // get player attack power
-
+            // get Bullet attack power
+            ReduceHP(10);
         }
     }
 }
