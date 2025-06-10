@@ -87,6 +87,7 @@ public class Enemy : MonoBehaviour
         if (HP < 0)
         {
             HP = 0;
+            manager.RecycleEnemy(this);
         }
     }
 
