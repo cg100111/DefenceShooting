@@ -82,4 +82,12 @@ public class ObjectPool : MonoBehaviour
         unUse.Add(enemy);
         used.Remove(enemy);
     }
+
+    public void RecycleAllEnemy()
+    {
+        for(int index = 0; index < used.Count;)
+        {
+            Recycle(used[index]);
+        }
+    }
 }
