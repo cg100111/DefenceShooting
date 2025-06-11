@@ -34,7 +34,7 @@ public class Shot1Script : MonoBehaviour
             if (rb != null)
             {
                 Vector2 knockback = collision.transform.position - transform.position;
-                rb.AddForce(knockback.normalized * 1000f); // adjust force value
+                rb.AddForce(knockback.normalized * 10000f); // adjust force value
             }
 
             // Destroy bullet (unless you want it to bounce)
