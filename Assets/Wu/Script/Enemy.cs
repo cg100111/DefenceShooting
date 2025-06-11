@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
     private Rigidbody2D body;
     private EnemyManager manager;
     private Animator animator;
     private CircleCollider2D attackCollider;
+
+    private StateManager stateManager;
 
     /// <summary>
     /// 最大体力
@@ -29,25 +31,29 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 活動しているか
     /// </summary>
-    private bool isActive;
+    public bool isActive {  get; private set; }
 
     /// <summary>
     /// 攻撃してるか
     /// </summary>
-    private bool isAttack;
+    public bool isAttack { get; private set; }
 
     /// <summary>
     /// 攻撃されてるか
     /// </summary>
-    private bool isHit;
+    public bool isHit { get; private set; }
+
+    private void Awake()
+    {
+        body = gameObject.GetComponent<Rigidbody2D>();
+        animator = gameObject.GetComponent<Animator>();
+        attackCollider = gameObject.GetComponentInChildren<CircleCollider2D>();
+        stateManager = new StateManager();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        attackCollider = GetComponentInChildren<CircleCollider2D>();
-
         Initialized();
     }
 
@@ -58,35 +64,20 @@ public class Enemy : MonoBehaviour
         {
             Active();
         }
-        // 攻撃する
-        if (IsAlive() && !isHit && !isAttack)
-        {
-            // 攻撃範囲入ったら
-            //if()
-        }
+        
     }
 
-    void FixedUpdate()
-    {
-        Move();
-    }
+    public Animator GetAnimator() { return animator; }
 
-    private void Move()
+    public void Move()
     {
-        if (isActive && HP > 0)
-        {
-            animator.SetBool("isWalk", true);
-            body.MovePosition(transform.position + moveSpeed * Time.deltaTime * Vector3.left);
-        }
+        body.MovePosition(transform.position + moveSpeed * Time.deltaTime * Vector3.left);
     }
 
     public void Initialized()
     {
         HP = MAX_HP;
-        CloseAttackCollider();
-        AttackFinished();
-        HitFinished();
-        Inactive();
+        stateManager.ChangeState(new EnemyIdleState(this, stateManager));
     }
 
     public void Active()
@@ -171,7 +162,9 @@ public class Enemy : MonoBehaviour
         {
             // get Bullet attack power
             //float damage = collision.gameObject.GetComponent<>();
+
             ReduceHP(10);
+
         }
     }
 }
