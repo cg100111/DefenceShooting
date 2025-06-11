@@ -11,6 +11,8 @@ public class ShotGenerator : MonoBehaviour
     public GameObject Shot1Prefab;
     public Image BarPowerCurrent;
     public Image BarPowerBase;
+    public AudioClip SECharge;
+    AudioSource aud;
     private const float MAXPOWER = 100.0f;
     private const float MINSPEED = 30.0f;
 
@@ -19,6 +21,7 @@ public class ShotGenerator : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        this.aud = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,6 +29,10 @@ public class ShotGenerator : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            this.aud.PlayOneShot(this.SECharge); //broken
+            Debug.Log("Mouse click");
+
+
             StartCoroutine(ChargeAndFire());
         //    Test();  //debug
         }
@@ -37,6 +44,11 @@ public class ShotGenerator : MonoBehaviour
         BarPowerCurrent.gameObject.SetActive(true); // show bars
         BarPowerBase.gameObject.SetActive(true);
 
+        if(Input.GetMouseButtonDown(1))  //debug
+        {
+
+
+        }
 
         while (Input.GetMouseButton(0))
         {
@@ -48,6 +60,8 @@ public class ShotGenerator : MonoBehaviour
             }
             yield return null; // wait for next frame
         }
+
+        //this.aud.Stop();
 
         BarPowerCurrent.fillAmount = 0; //reset bar to 0
         BarPowerCurrent.gameObject.SetActive(false); // hide bars
