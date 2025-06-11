@@ -12,6 +12,8 @@ public class ShotGenerator : MonoBehaviour
     public Image BarPowerCurrent;
     public Image BarPowerBase;
     public AudioClip SECharge;
+    public AudioClip[] SEShoot;
+
     AudioSource aud;
     private const float MAXPOWER = 100.0f;
     private const float MINSPEED = 30.0f;
@@ -35,6 +37,11 @@ public class ShotGenerator : MonoBehaviour
 
             StartCoroutine(ChargeAndFire());
         //    Test();  //debug
+        }
+        if (Input.GetMouseButtonUp(0)) 
+        {
+            this.aud.Stop();
+
         }
     }
 
@@ -80,7 +87,8 @@ public class ShotGenerator : MonoBehaviour
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
         shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (MINSPEED + power), power / 3);
 
-
+        int randomSE = Random.Range(0, SEShoot.Length); // Random index 0 to 2
+        aud.PlayOneShot(SEShoot[randomSE]);
         //--------------DEBUG LOGS-------------------------------
         //Debug.Log($"worldPos : {worldPos}");
         //Debug.Log($"bullSpanPos : {shotSpawnPos}");

@@ -1811,6 +1811,10 @@ MonoBehaviour:
   BarPowerCurrent: {fileID: 948897416}
   BarPowerBase: {fileID: 911853534}
   SECharge: {fileID: 8300000, guid: 3ddc9fe048cc9ec43968cc8e32760d51, type: 3}
+  SEShoot:
+  - {fileID: 8300000, guid: 5734743aa545ba7448c9a319b97cf112, type: 3}
+  - {fileID: 8300000, guid: 760792d7a2d5f9941ad4d7c3c0a2a5df, type: 3}
+  - {fileID: 8300000, guid: 821781a372efeff41af5d8f545ec8f23, type: 3}
 --- !u!82 &2111184615
 AudioSource:
   m_ObjectHideFlags: 0
