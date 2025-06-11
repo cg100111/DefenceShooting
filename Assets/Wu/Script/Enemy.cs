@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D body;
     private EnemyManager manager;
     private Animator animator;
+    private CircleCollider2D attackCollider;
 
     /// <summary>
     /// 最大体力
@@ -30,12 +31,24 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private bool isActive;
 
+    /// <summary>
+    /// 攻撃してるか
+    /// </summary>
+    private bool isAttack;
+
+    /// <summary>
+    /// 攻撃されてるか
+    /// </summary>
+    private bool isHit;
+
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        Inactive();
+        attackCollider = GetComponentInChildren<CircleCollider2D>();
+
+        Initialized();
     }
 
     // Update is called once per frame
@@ -44,6 +57,12 @@ public class Enemy : MonoBehaviour
         if (Input.GetKey(KeyCode.T))
         {
             Active();
+        }
+        // 攻撃する
+        if (IsAlive() && !isHit && !isAttack)
+        {
+            // 攻撃範囲入ったら
+            //if()
         }
     }
 
@@ -64,6 +83,10 @@ public class Enemy : MonoBehaviour
     public void Initialized()
     {
         HP = MAX_HP;
+        CloseAttackCollider();
+        AttackFinished();
+        HitFinished();
+        Inactive();
     }
 
     public void Active()
@@ -87,15 +110,67 @@ public class Enemy : MonoBehaviour
         if (HP < 0)
         {
             HP = 0;
-            manager.RecycleEnemy(this);
+            animator.SetTrigger("death");
         }
+        else
+        {
+            StartHit();
+        }
+    }
+
+    public bool IsAlive()
+    {
+        return HP > 0;
+    }
+
+    public void OpenAttackCollider()
+    {
+        if (attackCollider)
+            attackCollider.enabled = true;
+    }
+
+    public void CloseAttackCollider()
+    {
+        if (attackCollider)
+            attackCollider.enabled = false;
+    }
+
+    private void StartAttack()
+    {
+        isAttack = true;
+        animator.SetBool("attack", isAttack);
+    }
+
+    public void AttackFinished()
+    {
+        isAttack = false;
+        animator.SetBool("attack", isAttack);
+    }
+
+    private void StartHit()
+    {
+        isHit = true;
+        animator.SetBool("isHit", isHit);
+    }
+
+    public void HitFinished()
+    {
+        isHit = false;
+        animator.SetBool("isHit", isHit);
+    }
+
+    public void DeathFinished()
+    {
+        manager.RecycleEnemy(this);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("PlayerBullet"))
+        // 攻撃された
+        if(!isHit && collision.gameObject.CompareTag("PlayerBullet"))
         {
             // get Bullet attack power
+            //float damage = collision.gameObject.GetComponent<>();
             ReduceHP(10);
         }
     }
