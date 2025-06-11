@@ -45,7 +45,6 @@ public class PushButton : MonoBehaviour
                 color.a = 0.0f;
                 image.color = color;
             }
-            time--;
         }
         else
         {
