@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Start_Button : MonoBehaviour
 {
+    public FadeSceneLoader fadeSceneLoader;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class Start_Button : MonoBehaviour
 
     public void OnClick_Start()
     {
-        Debug.Log("Click!");
-        SceneManager.LoadScene("Game");
+        GetComponent<AudioSource>().Play();
+        fadeSceneLoader.CallCoroutine();
     }
 }
