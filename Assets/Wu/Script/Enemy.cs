@@ -64,7 +64,6 @@ public class Enemy : Character
         {
             Active();
         }
-        
     }
 
     public Animator GetAnimator() { return animator; }
@@ -101,7 +100,6 @@ public class Enemy : Character
         if (HP < 0)
         {
             HP = 0;
-            animator.SetTrigger("death");
         }
         else
         {
@@ -161,10 +159,8 @@ public class Enemy : Character
         if(!isHit && collision.gameObject.CompareTag("PlayerBullet"))
         {
             // get Bullet attack power
-            //float damage = collision.gameObject.GetComponent<>();
-
-            ReduceHP(10);
-
+            int damage = collision.gameObject.GetComponent<Shot1Script>().GetDamageValue();
+            ReduceHP(damage);
         }
     }
 }
