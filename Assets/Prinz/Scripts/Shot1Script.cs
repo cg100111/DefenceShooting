@@ -6,7 +6,12 @@ public class Shot1Script : MonoBehaviour
 {
     float timer = 0.0f; //bullet timer
     const float MAXTIMER = 10.0f; //bullet max timer
-    public int damageValue = 2; //bullet damage
+
+    [SerializeField]
+    private int damageValue = 2;
+    public int DV = 2;
+
+
     public void Shoot(Vector3 dir, float spin)
     {
         Vector2 dir2D = new Vector2(dir.x, dir.y);
@@ -22,7 +27,7 @@ public class Shot1Script : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             // Apply damage
-            collision.gameObject.GetComponent<Enemy>().ReduceHP(damageValue);
+        //    collision.gameObject.GetComponent<Enemy>().ReduceHP(DV);
 
             // Optional: Knockback (example, simple force away from bullet)
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -37,15 +42,11 @@ public class Shot1Script : MonoBehaviour
         }
     }
 
-    //public void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Enemy")
-    //    {
-    //        //    collision.gameObject.GetComponent<GameObject>().HP -= Mathf.Min(1.0f, damageValue);
-    //        Debug.Log("Bullet has hit");
-    //        Destroy(gameObject);
-    //    }
-    //}
+
+    public int GetDamageValue()
+    {
+        return damageValue;
+    }
 
     // Start is called before the first frame update
     void Start()
