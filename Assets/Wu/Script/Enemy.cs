@@ -10,6 +10,9 @@ public class Enemy : Character
     private CircleCollider2D attackCollider;
     private PlayerScript target;
     private StateManager stateManager;
+    private AudioSource soundPlayer;
+    [SerializeField]
+    private AudioClip deathSE;
 
     /// <summary>
     /// 最大体力
@@ -54,6 +57,7 @@ public class Enemy : Character
         animator = gameObject.GetComponent<Animator>();
         attackCollider = gameObject.GetComponentInChildren<CircleCollider2D>();
         stateManager = new StateManager();
+        soundPlayer = gameObject.GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -72,7 +76,15 @@ public class Enemy : Character
         stateManager.Update(target);
     }
 
-    public Animator GetAnimator() { return animator; }
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
+
+    public Rigidbody2D GetBody()
+    {
+        return body;
+    }
 
     public void Move()
     {
@@ -86,6 +98,7 @@ public class Enemy : Character
         isAttack = false;
         isHit = false;
         Inactive();
+        gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
         stateManager.ChangeState(new EnemyIdleState(this, stateManager));
     }
 
@@ -112,15 +125,22 @@ public class Enemy : Character
     private void ReduceHP(int damage)
     {
         HP -= damage;
-        if (HP < 0)
+        if (HP <= 0.0f)
         {
             HP = 0;
             stateManager.ChangeState(new EnemyDeathState(this, stateManager));
         }
         else
         {
-            stateManager.ChangeState(new EnemyDeathState(this, stateManager));
+            isHit = true;
+            stateManager.ChangeState(new EnemyHurtState(this, stateManager));
         }
+    }
+
+    public void PlayDeathSE()
+    {
+        soundPlayer.clip = deathSE;
+        soundPlayer.Play();
     }
 
     public float GetAttackPower()
@@ -147,9 +167,7 @@ public class Enemy : Character
 
     public void AttackFinished()
     {
-        Debug.Log("Attack Finished");
         isAttack = false;
-        Debug.Log("change to walk state");
         stateManager.ChangeState(new EnemyWalkState(this, stateManager));
     }
 
@@ -179,7 +197,6 @@ public class Enemy : Character
         // 攻撃する
         if (!isHit && !isAttack && collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("will do attack");
             isAttack = true;
         }
     }
