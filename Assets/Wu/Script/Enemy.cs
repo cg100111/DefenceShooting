@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ public class Enemy : Character
     private EnemyManager manager;
     private Animator animator;
     private CircleCollider2D attackCollider;
-
+    private PlayerScript target;
     private StateManager stateManager;
 
     /// <summary>
@@ -29,9 +29,14 @@ public class Enemy : Character
     private float moveSpeed;
 
     /// <summary>
+    /// 攻撃力
+    /// </summary>
+    private float attackPower;
+
+    /// <summary>
     /// 活動しているか
     /// </summary>
-    public bool isActive {  get; private set; }
+    public bool isActive { get; private set; }
 
     /// <summary>
     /// 攻撃してるか
@@ -64,6 +69,7 @@ public class Enemy : Character
         {
             Active();
         }
+        stateManager.Update(target);
     }
 
     public Animator GetAnimator() { return animator; }
@@ -76,6 +82,10 @@ public class Enemy : Character
     public void Initialized()
     {
         HP = MAX_HP;
+        CloseAttackCollider();
+        isAttack = false;
+        isHit = false;
+        Inactive();
         stateManager.ChangeState(new EnemyIdleState(this, stateManager));
     }
 
@@ -94,17 +104,28 @@ public class Enemy : Character
         this.manager = manager;
     }
 
+    public void SetTarget(PlayerScript target)
+    {
+        this.target = target;
+    }
+
     private void ReduceHP(int damage)
     {
         HP -= damage;
         if (HP < 0)
         {
             HP = 0;
+            stateManager.ChangeState(new EnemyDeathState(this, stateManager));
         }
         else
         {
-            StartHit();
+            stateManager.ChangeState(new EnemyDeathState(this, stateManager));
         }
+    }
+
+    public float GetAttackPower()
+    {
+        return attackPower;
     }
 
     public bool IsAlive()
@@ -124,28 +145,17 @@ public class Enemy : Character
             attackCollider.enabled = false;
     }
 
-    private void StartAttack()
-    {
-        isAttack = true;
-        animator.SetBool("attack", isAttack);
-    }
-
     public void AttackFinished()
     {
+        Debug.Log("Attack Finished");
         isAttack = false;
-        animator.SetBool("attack", isAttack);
-    }
-
-    private void StartHit()
-    {
-        isHit = true;
-        animator.SetBool("isHit", isHit);
+        Debug.Log("change to walk state");
+        stateManager.ChangeState(new EnemyWalkState(this, stateManager));
     }
 
     public void HitFinished()
     {
         isHit = false;
-        animator.SetBool("isHit", isHit);
     }
 
     public void DeathFinished()
@@ -156,11 +166,21 @@ public class Enemy : Character
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // 攻撃された
-        if(!isHit && collision.gameObject.CompareTag("PlayerBullet"))
+        if (!isHit && collision.gameObject.CompareTag("PlayerBullet"))
         {
             // get Bullet attack power
             int damage = collision.gameObject.GetComponent<Shot1Script>().GetDamageValue();
             ReduceHP(damage);
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        // 攻撃する
+        if (!isHit && !isAttack && collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("will do attack");
+            isAttack = true;
         }
     }
 }

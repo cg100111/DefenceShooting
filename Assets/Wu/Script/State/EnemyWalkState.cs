@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class EnemyWalkState : BaseState
 {
@@ -10,22 +9,29 @@ public class EnemyWalkState : BaseState
     public override void EnterState()
     {
         Enemy mine = (Enemy)me;
-        mine.GetAnimator().SetBool("isWalk", true);
+        mine.GetAnimator().CrossFadeInFixedTime("Walk", 0);
     }
 
     public override void ExitState()
     {
+
     }
 
     public override void UpdateState(Character target)
     {
         Enemy mine = (Enemy)me;
-        // UŒ‚‚³‚ê‚½
+        // æ”»æ’ƒ
+        if (mine.isAttack)
+        {
+            manager.ChangeState(new EnemyAttackState(me, manager));
+            return;
+        }
 
-        //ˆÚ“®
+        // ç§»å‹•
         if (mine.IsAlive())
         {
             mine.Move();
         }
+
     }
 }

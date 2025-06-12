@@ -1,18 +1,25 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeathState : MonoBehaviour
+public class EnemyDeathState : BaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public EnemyDeathState(Character c, StateManager m) : base(c, m) { }
+
+    public override void EnterState()
     {
-        
+        Enemy mine = (Enemy)me;
+        mine.GetAnimator().CrossFadeInFixedTime("Death Skeleton", 0f);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ExitState()
     {
-        
     }
+
+    public override void UpdateState(Character target)
+    {
+
+    }
+
+
 }

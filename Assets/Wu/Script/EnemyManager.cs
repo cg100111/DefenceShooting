@@ -14,6 +14,8 @@ public class EnemyManager : MonoBehaviour
 {
     private ObjectPool baseEnemyPool;
 
+    private PlayerScript player;
+
     /// <summary>
     /// 派遣の間隔
     /// </summary>
@@ -52,6 +54,7 @@ public class EnemyManager : MonoBehaviour
         deployCount = 0.0f;
         deployTime = NextDeployTime();
         baseEnemyPool = GetComponentsInChildren<ObjectPool>().Where(c => c.CompareTag("BaseOP")).First();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
     }
 
     // Update is called once per frame
@@ -62,7 +65,7 @@ public class EnemyManager : MonoBehaviour
     void FixedUpdate()
     {
         deployCount += Time.fixedDeltaTime;
-        if(deployCount >= deployTime)
+        if (deployCount >= deployTime)
         {
             deployCount -= deployTime;
             deployTime = NextDeployTime();

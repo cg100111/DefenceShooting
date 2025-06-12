@@ -1,18 +1,26 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
-public class EnemyAttackState : MonoBehaviour
+public class EnemyAttackState : BaseState
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public EnemyAttackState(Character c, StateManager m) : base(c, m)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void EnterState()
     {
-        
+        Enemy mine = (Enemy)me;
+        mine.GetAnimator().CrossFadeInFixedTime("Attack", 0f);
+    }
+
+    public override void ExitState()
+    {
+    }
+
+    public override void UpdateState(Character target)
+    {
     }
 }

@@ -1,24 +1,21 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class EnemyIdleState : BaseState
 {
-    public EnemyIdleState(Character c, StateManager m): base(c, m) { }
+    public EnemyIdleState(Character c, StateManager m) : base(c, m) { }
 
 
     public override void EnterState()
     {
         Enemy mine = (Enemy)me;
-        mine.CloseAttackCollider();
-        mine.AttackFinished();
-        mine.HitFinished();
-        mine.Inactive();
+        mine.GetAnimator().Play("Idle");
     }
 
     public override void ExitState()
-    {  
+    {
     }
 
     public override void UpdateState(Character target)
