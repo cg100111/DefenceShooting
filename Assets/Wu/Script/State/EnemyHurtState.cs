@@ -9,7 +9,7 @@ public class EnemyHurtState : BaseState
     public override void EnterState()
     {
         Enemy mine = (Enemy)me;
-        mine.GetAnimator().CrossFade("Get Hit", 0.1f);
+        mine.GetAnimator().CrossFadeInFixedTime("GetHit", 0f);
     }
 
     public override void ExitState()
