@@ -18,7 +18,10 @@ public class CreateBO : MonoBehaviour
         color.a = 0.0f;
         image.color = color;
         button = GameObject.Find("Button");
-        pushButton = button.GetComponent<PushButton>();
+        if(button != null)
+        {
+            pushButton = button.GetComponent<PushButton>();
+        }
     }
 
     // Update is called once per frame
@@ -36,7 +39,7 @@ public class CreateBO : MonoBehaviour
             if (color.a >= 1.0f)
             {
                 pushButton.sceneChange = false;
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Title");
 
             }
         }

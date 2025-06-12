@@ -8,6 +8,8 @@ public class PushButton : MonoBehaviour
 {
     public Image image;
     public Animator animator;
+    public AudioClip push;//•K—v‚È‚¢‚©‚à
+    AudioSource audioSouce;
     Color color;
     bool pushButton;
     float timer;
@@ -17,6 +19,7 @@ public class PushButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSouce = GetComponent<AudioSource>();
         color = image.color;
         animator = gameObject.GetComponent<Animator>();
         pushButton = false;
@@ -45,6 +48,8 @@ public class PushButton : MonoBehaviour
     {
         pushButton = true;
         animator.SetBool("OnPush", true);
+        //audioSouce.PlayOneShot(push);
+        audioSouce.Play();
         Debug.Log("animator,PushButton true");
     }
 }
