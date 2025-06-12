@@ -499,7 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAX_HP: 10
-  moveSpeed: 10
+  moveSpeed: 20
 --- !u!4 &8884896199880325107 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6167709168795204872, guid: 0f6639ad26652b94899a70bfa1ad30c5, type: 3}
