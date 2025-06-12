@@ -10,6 +10,9 @@ public class Enemy : Character
     private CircleCollider2D attackCollider;
     private PlayerScript target;
     private StateManager stateManager;
+    private AudioSource soundPlayer;
+    [SerializeField]
+    private AudioClip deathSE;
 
     /// <summary>
     /// 最大体力
@@ -54,6 +57,7 @@ public class Enemy : Character
         animator = gameObject.GetComponent<Animator>();
         attackCollider = gameObject.GetComponentInChildren<CircleCollider2D>();
         stateManager = new StateManager();
+        soundPlayer = gameObject.GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -131,6 +135,12 @@ public class Enemy : Character
             isHit = true;
             stateManager.ChangeState(new EnemyHurtState(this, stateManager));
         }
+    }
+
+    public void PlayDeathSE()
+    {
+        soundPlayer.clip = deathSE;
+        soundPlayer.Play();
     }
 
     public float GetAttackPower()

@@ -9,7 +9,9 @@ public class EnemyDeathState : BaseState
     public override void EnterState()
     {
         Enemy mine = (Enemy)me;
+        mine.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
         mine.GetAnimator().CrossFadeInFixedTime("Death Skeleton", 0f);
+        mine.PlayDeathSE();
     }
 
     public override void ExitState()
