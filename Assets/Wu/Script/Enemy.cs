@@ -1,12 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
     private Rigidbody2D body;
     private EnemyManager manager;
     private Animator animator;
+    private CircleCollider2D attackCollider;
+    private PlayerScript target;
+    private StateManager stateManager;
 
     /// <summary>
     /// 最大体力
@@ -26,16 +29,36 @@ public class Enemy : MonoBehaviour
     private float moveSpeed;
 
     /// <summary>
+    /// 攻撃力
+    /// </summary>
+    private float attackPower;
+
+    /// <summary>
     /// 活動しているか
     /// </summary>
-    private bool isActive;
+    public bool isActive { get; private set; }
+
+    /// <summary>
+    /// 攻撃してるか
+    /// </summary>
+    public bool isAttack { get; private set; }
+
+    /// <summary>
+    /// 攻撃されてるか
+    /// </summary>
+    public bool isHit { get; private set; }
+
+    private void Awake()
+    {
+        body = gameObject.GetComponent<Rigidbody2D>();
+        animator = gameObject.GetComponent<Animator>();
+        attackCollider = gameObject.GetComponentInChildren<CircleCollider2D>();
+        stateManager = new StateManager();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        Inactive();
         Initialized();
     }
 
@@ -46,25 +69,24 @@ public class Enemy : MonoBehaviour
         {
             Active();
         }
+        stateManager.Update(target);
     }
 
-    void FixedUpdate()
-    {
-        Move();
-    }
+    public Animator GetAnimator() { return animator; }
 
-    private void Move()
+    public void Move()
     {
-        if (isActive && HP > 0)
-        {
-            animator.SetBool("isWalk", true);
-            body.MovePosition(transform.position + moveSpeed * Time.deltaTime * Vector3.left);
-        }
+        body.MovePosition(transform.position + moveSpeed * Time.deltaTime * Vector3.left);
     }
 
     public void Initialized()
     {
         HP = MAX_HP;
+        CloseAttackCollider();
+        isAttack = false;
+        isHit = false;
+        Inactive();
+        stateManager.ChangeState(new EnemyIdleState(this, stateManager));
     }
 
     public void Active()
@@ -82,23 +104,83 @@ public class Enemy : MonoBehaviour
         this.manager = manager;
     }
 
-    public void ReduceHP(int damage)
+    public void SetTarget(PlayerScript target)
+    {
+        this.target = target;
+    }
+
+    private void ReduceHP(int damage)
     {
         HP -= damage;
         if (HP < 0)
         {
             HP = 0;
+            stateManager.ChangeState(new EnemyDeathState(this, stateManager));
         }
+        else
+        {
+            stateManager.ChangeState(new EnemyDeathState(this, stateManager));
+        }
+    }
+
+    public float GetAttackPower()
+    {
+        return attackPower;
+    }
+
+    public bool IsAlive()
+    {
+        return HP > 0;
+    }
+
+    public void OpenAttackCollider()
+    {
+        if (attackCollider)
+            attackCollider.enabled = true;
+    }
+
+    public void CloseAttackCollider()
+    {
+        if (attackCollider)
+            attackCollider.enabled = false;
+    }
+
+    public void AttackFinished()
+    {
+        Debug.Log("Attack Finished");
+        isAttack = false;
+        Debug.Log("change to walk state");
+        stateManager.ChangeState(new EnemyWalkState(this, stateManager));
+    }
+
+    public void HitFinished()
+    {
+        isHit = false;
+    }
+
+    public void DeathFinished()
+    {
+        manager.RecycleEnemy(this);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("PlayerBullet"))
+        // 攻撃された
+        if (!isHit && collision.gameObject.CompareTag("PlayerBullet"))
         {
             // get Bullet attack power
-            Debug.Log("Enemy was Hit");
-        //    Destroy(gameObject); // destroy bullet
-         //   ReduceHP(10);
+            int damage = collision.gameObject.GetComponent<Shot1Script>().GetDamageValue();
+            ReduceHP(damage);
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        // 攻撃する
+        if (!isHit && !isAttack && collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("will do attack");
+            isAttack = true;
         }
     }
 }
