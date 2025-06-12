@@ -82,10 +82,13 @@ public class EnemyManager : MonoBehaviour
         Vector3 startPos = new(startTopPos.x, (int)startPosY, startTopPos.z);
 
         Enemy enemy = baseEnemyPool.Borrow();
-        enemy.transform.position = startPos;
-        enemy.SetManager(this);
-        enemy.GetComponent<SortingGroup>().sortingOrder = Mathf.Abs((int)(startPosY - startTopPos.y));
-        enemy.Active();
+        if (enemy)
+        {
+            enemy.transform.position = startPos;
+            enemy.SetManager(this);
+            enemy.GetComponent<SortingGroup>().sortingOrder = Mathf.Abs((int)(startPosY - startTopPos.y));
+            enemy.Active();
+        }
     }
 
     private float GetStartPos()

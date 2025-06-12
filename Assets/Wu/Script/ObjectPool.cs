@@ -17,6 +17,12 @@ public class ObjectPool : MonoBehaviour
     private int MAX_ENEMY;
 
     /// <summary>
+    /// 足りない時補充するか
+    /// </summary>
+    [SerializeField]
+    private bool NeedSupplement;
+
+    /// <summary>
     /// 生成した時の初期位置
     /// </summary>
     [SerializeField]
@@ -65,6 +71,9 @@ public class ObjectPool : MonoBehaviour
     {
         if (unUse.Count <= 0)
         {
+            if (!NeedSupplement)
+                return null;
+
             unUse.Add(CreateEnemy());
         }
 
@@ -85,7 +94,7 @@ public class ObjectPool : MonoBehaviour
 
     public void RecycleAllEnemy()
     {
-        for(int index = 0; index < used.Count;)
+        for (int index = 0; index < used.Count;)
         {
             Recycle(used[index]);
         }
