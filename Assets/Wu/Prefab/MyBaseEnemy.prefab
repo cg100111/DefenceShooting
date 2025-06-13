@@ -117,11 +117,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 0f6639ad26652b94899a70bfa1ad30c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 0f6639ad26652b94899a70bfa1ad30c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.57
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 0f6639ad26652b94899a70bfa1ad30c5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -598,8 +598,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSE: {fileID: 8300000, guid: 64a2fbe2a44800a40ab37eb0b303c98c, type: 3}
-  MAX_HP: 10
+  hitSEList:
+  - {fileID: 8300000, guid: a3c0d2a89df222146903030853ae872f, type: 3}
+  - {fileID: 8300000, guid: 2add33a68c2f26e46a7fed26942208ac, type: 3}
+  - {fileID: 8300000, guid: f149cd75ea37916448a0e32ae3982649, type: 3}
+  MAX_HP: 4
   moveSpeed: 20
+  attackPower: 1
 --- !u!4 &8884896199880325107 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6167709168795204872, guid: 0f6639ad26652b94899a70bfa1ad30c5, type: 3}
