@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public struct DeployInfo
 {
     /// <summary>
@@ -27,4 +26,9 @@ public struct DeployInfo
     /// </summary>
     [HideInInspector]
     public float deployTime;
+
+    public void NextDeployTime()
+    {
+        deployTime = Random.Range(deployDelay - deployDelayRange, deployDelay + deployDelayRange);
+    }
 }
