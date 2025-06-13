@@ -28,7 +28,7 @@ public class Shot1Script : MonoBehaviour
         Vector2 dir2D = new Vector2(dir.x, dir.y);
         GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
         GetComponent<Rigidbody2D>().AddTorque(spin, ForceMode2D.Impulse);
-        this.damageValue = (int)spin / 3;
+        this.damageValue =  1 + (int)spin / 3;
 
         Debug.Log($"Damage Value : {this.damageValue}"); //debug
 
@@ -40,9 +40,6 @@ public class Shot1Script : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Apply damage
-        //    collision.gameObject.GetComponent<Enemy>().ReduceHP(DV);
-
             // Optional: Knockback (example, simple force away from bullet)
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (rb != null)
@@ -51,7 +48,7 @@ public class Shot1Script : MonoBehaviour
                 rb.AddForce(knockback.normalized * 10000f); // adjust force value
                 if (this.bounceCnt <= 0)
                 {
-                    generator?.SEexplosion(); // play SE safely
+                    generator?.PlaySEexplosion(); // play SE safely
                     // Destroy bullet
                     Destroy(gameObject);
                 }

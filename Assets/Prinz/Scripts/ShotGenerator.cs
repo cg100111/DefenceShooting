@@ -99,7 +99,7 @@ public class ShotGenerator : MonoBehaviour
     }
 
     //弾の爆発SE
-    public void SEexplosion()
+    public void PlaySEexplosion()
     {
         int randomSE = Random.Range(0, SEExplosion.Length);
         aud.PlayOneShot(SEExplosion[randomSE]);
