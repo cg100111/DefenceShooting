@@ -249,7 +249,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &440049349
 GameObject:
@@ -318,6 +318,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &511551722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 511551724}
+  - component: {fileID: 511551723}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &511551723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511551722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b5ffa09caece824f98352830b126868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseEnemyDI:
+    deployDelay: 1
+    deployDelayRange: 0.2
+    deployCount: 0
+    deployTime: 0
+  baseWeaponEnemyDI:
+    deployDelay: 3
+    deployDelayRange: 0.5
+    deployCount: 0
+    deployTime: 0
+  startTopPos: {x: 110, y: -10, z: 60}
+  startBottomPos: {x: 110, y: -52, z: 60}
+--- !u!4 &511551724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511551722}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 60}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1332067470}
+  - {fileID: 1215753121}
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &641211760
 GameObject:
@@ -623,6 +681,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5734743aa545ba7448c9a319b97cf112, type: 3}
   - {fileID: 8300000, guid: 760792d7a2d5f9941ad4d7c3c0a2a5df, type: 3}
   - {fileID: 8300000, guid: 821781a372efeff41af5d8f545ec8f23, type: 3}
+  SEExplosion: []
 --- !u!4 &903049901
 Transform:
   m_ObjectHideFlags: 0
@@ -636,7 +695,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &911853532
 GameObject:
@@ -971,7 +1030,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1168729561
+--- !u!1 &1215753120
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -979,47 +1038,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1168729563}
-  - component: {fileID: 1168729562}
+  - component: {fileID: 1215753121}
+  - component: {fileID: 1215753122}
   m_Layer: 0
-  m_Name: EnemyManager
-  m_TagString: Untagged
+  m_Name: BaseEnemySwordPool
+  m_TagString: BaseSwordOP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1168729562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168729561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b5ffa09caece824f98352830b126868, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnDelay: 1
-  spawnDelayRange: 0.2
-  startTopPos: {x: 110, y: -10, z: 60}
-  startBottomPos: {x: 110, y: -52, z: 60}
---- !u!4 &1168729563
+--- !u!4 &1215753121
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168729561}
+  m_GameObject: {fileID: 1215753120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 60}
+  m_LocalPosition: {x: 125, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1521399897}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Children: []
+  m_Father: {fileID: 511551724}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1215753122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215753120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50278384cadab604290a110fbe9a66f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 2197728809703966535, guid: 09ec42dbe0dabc34aae266f605fb96d6, type: 3}
+  MAX_ENEMY: 10
+  NeedSupplement: 0
+  initPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1266219991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,9 +1249,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1521399896
+--- !u!1 &1332067469
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1201,8 +1259,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1521399897}
-  - component: {fileID: 1521399898}
+  - component: {fileID: 1332067470}
+  - component: {fileID: 1332067471}
   m_Layer: 0
   m_Name: BaseEnemyPool
   m_TagString: BaseOP
@@ -1210,35 +1268,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1521399897
+--- !u!4 &1332067470
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521399896}
+  m_GameObject: {fileID: 1332067469}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 125, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1168729563}
+  m_Father: {fileID: 511551724}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1521399898
+--- !u!114 &1332067471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521399896}
+  m_GameObject: {fileID: 1332067469}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50278384cadab604290a110fbe9a66f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6254748823944549558, guid: e10f8befbbf29e047ba7c0975201253c, type: 3}
-  MAX_ENEMY: 1
+  MAX_ENEMY: 10
   NeedSupplement: 0
   initPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1748657092
