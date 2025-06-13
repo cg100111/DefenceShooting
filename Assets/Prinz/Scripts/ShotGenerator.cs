@@ -13,6 +13,7 @@ public class ShotGenerator : MonoBehaviour
     public Image BarPowerBase;
     public AudioClip SECharge;
     public AudioClip[] SEShoot;
+    public AudioClip[] SEExplosion;
 
     AudioSource aud;
     private const float MAXPOWER = 100.0f;
@@ -85,6 +86,7 @@ public class ShotGenerator : MonoBehaviour
 
         // Instantiate the shot
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
+        shot.GetComponent<Shot1Script>().SetGenerator(this);
         shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (MINSPEED + power), power / 3);
 
         int randomSE = Random.Range(0, SEShoot.Length); // Random index 0 to 2
@@ -94,6 +96,13 @@ public class ShotGenerator : MonoBehaviour
         //Debug.Log($"bullSpanPos : {shotSpawnPos}");
         //Debug.Log($"distance : {worldPos - shotSpawnPos}");
         //Debug.Log($"distance norm : {(worldPos - shotSpawnPos).normalized}");
+    }
+
+    //弾の爆発SE
+    public void SEexplosion()
+    {
+        int randomSE = Random.Range(0, SEExplosion.Length);
+        aud.PlayOneShot(SEExplosion[randomSE]);
     }
 
     //*******************************   DEBUG   **********************************

@@ -102,16 +102,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681cdc1c58f2e594c937259022dc7cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SEexplosion:
-  - {fileID: 8300000, guid: 41727d0bffafbb54fbe76c488c7add0c, type: 3}
-  - {fileID: 8300000, guid: ab0a41e7b1cc33a4dbc63a622552bd1d, type: 3}
-  - {fileID: 8300000, guid: fd2fa47ebfe096748b20b996a6c96ce2, type: 3}
   SEbounce:
   - {fileID: 8300000, guid: 72c4408156a580941adffa25467ef0b7, type: 3}
   - {fileID: 8300000, guid: 3b031044731fe9345b76b7325ae2247d, type: 3}
   - {fileID: 8300000, guid: e6beb560b5f6fb34db189521430dc999, type: 3}
   damageValue: 2
-  DV: 2
+  bounceCnt: 1
 --- !u!50 &-2261713229262906428
 Rigidbody2D:
   serializedVersion: 4
