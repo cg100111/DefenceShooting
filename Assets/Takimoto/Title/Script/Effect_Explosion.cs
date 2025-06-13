@@ -10,6 +10,12 @@ public class Effect_Explosion : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void PlayExplosionAudio()
+    {
+        GetComponent<AudioSource>().Play();
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {

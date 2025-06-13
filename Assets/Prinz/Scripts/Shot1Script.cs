@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Shot1Script : MonoBehaviour
 {
     float timer = 0.0f; //bullet timer
     const float MAXTIMER = 10.0f; //bullet max timer
+    public AudioClip[] SEexplosion;
+    public AudioClip[] SEbounce;
+    AudioSource aud;
 
     [SerializeField]
     private int damageValue = 2;
+    private int bounceCnt = 1;
     public int DV = 2;
 
 
@@ -18,8 +23,8 @@ public class Shot1Script : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
         GetComponent<Rigidbody2D>().AddTorque(spin, ForceMode2D.Impulse);
 
-
-     //   Debug.Log($"dir : {dir}");
+        this.aud = GetComponent<AudioSource>();
+        //   Debug.Log($"dir : {dir}");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -35,10 +40,21 @@ public class Shot1Script : MonoBehaviour
             {
                 Vector2 knockback = collision.transform.position - transform.position;
                 rb.AddForce(knockback.normalized * 10000f); // adjust force value
+                if (this.bounceCnt <= 0)
+                {
+                    int randomSE = Random.Range(0, SEexplosion.Length); // Random index 0 to 2
+                    aud.PlayOneShot(SEexplosion[randomSE]);     //disappears with object -> create sound manager
+                    // Destroy bullet
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    this.bounceCnt--;
+                    int randomSE = Random.Range(0, SEbounce.Length); // Random index 0 to 2
+                    aud.PlayOneShot(SEbounce[randomSE]);
+                }
             }
 
-            // Destroy bullet (unless you want it to bounce)
-         //   Destroy(gameObject);
         }
     }
 
