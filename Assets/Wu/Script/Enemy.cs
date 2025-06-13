@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Enemy : Character
 {
+    public enum HitDir
+    {
+        front,
+        back
+    }
+
     private Rigidbody2D body;
     private EnemyManager manager;
     private Animator animator;
@@ -13,6 +19,8 @@ public class Enemy : Character
     private AudioSource soundPlayer;
     [SerializeField]
     private AudioClip deathSE;
+    [SerializeField]
+    private AudioClip[] hitSEList;
 
     /// <summary>
     /// 最大体力
@@ -34,6 +42,7 @@ public class Enemy : Character
     /// <summary>
     /// 攻撃力
     /// </summary>
+    [SerializeField]
     private float attackPower;
 
     /// <summary>
@@ -50,6 +59,11 @@ public class Enemy : Character
     /// 攻撃されてるか
     /// </summary>
     public bool isHit { get; private set; }
+
+    /// <summary>
+    /// 攻撃されてる方向
+    /// </summary>
+    public HitDir hitDir { get; private set; }
 
     private void Awake()
     {
@@ -143,6 +157,13 @@ public class Enemy : Character
         soundPlayer.Play();
     }
 
+    public void PlayHitSE()
+    {
+        int hitSEIndex = Random.Range(0, hitSEList.Length);
+        soundPlayer.clip = hitSEList[hitSEIndex];
+        soundPlayer.Play();
+    }
+
     public float GetAttackPower()
     {
         return attackPower;
@@ -186,6 +207,10 @@ public class Enemy : Character
         // 攻撃された
         if (!isHit && collision.gameObject.CompareTag("PlayerBullet"))
         {
+            if (transform.position.x < collision.transform.position.x)
+                hitDir = HitDir.back;
+            else
+                hitDir = HitDir.front;
             // get Bullet attack power
             int damage = collision.gameObject.GetComponent<Shot1Script>().GetDamageValue();
             ReduceHP(damage);

@@ -9,12 +9,18 @@ public class EnemyHurtState : BaseState
     public override void EnterState()
     {
         Enemy mine = (Enemy)me;
-        mine.GetAnimator().CrossFadeInFixedTime("GetHit", 0f);
+        if(mine.hitDir == Enemy.HitDir.front)
+            mine.GetAnimator().CrossFadeInFixedTime("GetHitFront", 0f);
+        else
+            mine.GetAnimator().CrossFadeInFixedTime("GetHitBack", 0f);
+        mine.PlayHitSE();
+        mine.GetBody().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
     }
 
     public override void ExitState()
     {
-
+        Enemy mine = (Enemy)me;
+        mine.GetBody().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     public override void UpdateState(Character target)

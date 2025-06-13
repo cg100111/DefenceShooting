@@ -13,27 +13,34 @@ enum EnemyType
 public class EnemyManager : MonoBehaviour
 {
     private ObjectPool baseEnemyPool;
+    private ObjectPool baseEnemySwordPool;
 
     private PlayerScript player;
 
     /// <summary>
-    /// 派遣の間隔
+    /// 一般敵を派遣する間隔
     /// </summary>
     [SerializeField]
-    private float spawnDelay;
+    private float deployBaseDelay;
 
     /// <summary>
-    /// 派遣間隔の範囲
+    /// 一般敵を派遣する間隔の範囲
     /// </summary>
     [SerializeField]
-    private float spawnDelayRange;
+    private float deployBaseSwordDelayRange;
 
     /// <summary>
-    /// 派遣カウンター
+    /// 一般敵を派遣するカウンター
     /// </summary>
-    private float deployCount;
+    private float deployBaseCount;
 
-    private float deployTime;
+    /// <summary>
+    /// 次に一般敵を派遣するタイミング
+    /// </summary>
+    private float deployBaseTime;
+
+    [SerializeField]
+    private DeployInfo baseEnemyDeployInfo;
 
     /// <summary>
     /// 開始位置(上)
@@ -51,9 +58,10 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
-        deployCount = 0.0f;
-        deployTime = NextDeployTime();
+        deployBaseCount = 0.0f;
+        deployBaseTime = NextDeployTime();
         baseEnemyPool = GetComponentsInChildren<ObjectPool>().Where(c => c.CompareTag("BaseOP")).First();
+        baseEnemySwordPool = GetComponentsInChildren<ObjectPool>().Where(c => c.CompareTag("BaseSwordOP")).First();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
     }
 
@@ -64,18 +72,18 @@ public class EnemyManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        deployCount += Time.fixedDeltaTime;
-        if (deployCount >= deployTime)
+        deployBaseCount += Time.fixedDeltaTime;
+        if (deployBaseCount >= deployBaseTime)
         {
-            deployCount -= deployTime;
-            deployTime = NextDeployTime();
+            deployBaseCount -= deployBaseTime;
+            deployBaseTime = NextDeployTime();
             DeployEnemy();
         }
     }
 
     private float NextDeployTime()
     {
-        return Random.Range(spawnDelay - spawnDelayRange, spawnDelay + spawnDelayRange);
+        return Random.Range(deployBaseDelay - deployBaseSwordDelayRange, deployBaseDelay + deployBaseSwordDelayRange);
     }
 
     private void DeployEnemy()
