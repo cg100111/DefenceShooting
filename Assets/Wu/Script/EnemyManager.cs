@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 enum EnemyType
 {
@@ -12,6 +13,8 @@ enum EnemyType
 public class EnemyManager : MonoBehaviour
 {
     private ObjectPool baseEnemyPool;
+
+    private PlayerScript player;
 
     /// <summary>
     /// 派遣の間隔
@@ -32,6 +35,17 @@ public class EnemyManager : MonoBehaviour
 
     private float deployTime;
 
+    /// <summary>
+    /// 開始位置(上)
+    /// </summary>
+    [SerializeField]
+    private Vector3 startTopPos;
+
+    /// <summary>
+    /// 開始位置(下)
+    /// </summary>
+    [SerializeField]
+    private Vector3 startBottomPos;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +54,7 @@ public class EnemyManager : MonoBehaviour
         deployCount = 0.0f;
         deployTime = NextDeployTime();
         baseEnemyPool = GetComponentsInChildren<ObjectPool>().Where(c => c.CompareTag("BaseOP")).First();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
     }
 
     // Update is called once per frame
@@ -50,11 +65,11 @@ public class EnemyManager : MonoBehaviour
     void FixedUpdate()
     {
         deployCount += Time.fixedDeltaTime;
-        if(deployCount >= deployTime)
+        if (deployCount >= deployTime)
         {
             deployCount -= deployTime;
             deployTime = NextDeployTime();
-            GetEnemy();
+            DeployEnemy();
         }
     }
 
@@ -63,13 +78,34 @@ public class EnemyManager : MonoBehaviour
         return Random.Range(spawnDelay - spawnDelayRange, spawnDelay + spawnDelayRange);
     }
 
-    private void GetEnemy()
+    private void DeployEnemy()
     {
+        // 表示するlayerはintですから、敵のY座標もintにする、そうしないと変になる
+        float startPosY = GetStartPos();
+        Vector3 startPos = new(startTopPos.x, (int)startPosY, startTopPos.z);
 
+        Enemy enemy = baseEnemyPool.Borrow();
+        if (enemy)
+        {
+            enemy.transform.position = startPos;
+            enemy.SetManager(this);
+            enemy.GetComponent<SortingGroup>().sortingOrder = Mathf.Abs((int)(startPosY - startTopPos.y));
+            enemy.Active();
+        }
+    }
+
+    private float GetStartPos()
+    {
+        return Random.Range(startTopPos.y, startBottomPos.y);
+    }
+
+    public void RecycleEnemy(Enemy enemy)
+    {
+        baseEnemyPool.Recycle(enemy);
     }
 
     public void RecycleAllEnemy()
     {
-       
+        baseEnemyPool.RecycleAllEnemy();
     }
 }

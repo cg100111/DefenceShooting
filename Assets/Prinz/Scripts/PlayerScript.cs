@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerScript : Character
 {
     public Image BarHPCurrent;
     public float HP = 100.0f;
     public const float MAXHP = 100.0f;
-   // float testTime = 100.0f; //debug
+    // float testTime = 100.0f; //debug
 
 
     // Start is called before the first frame update
@@ -20,8 +20,8 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     //   testTime -= Time.deltaTime;
-     //   HP = testTime;
+        //   testTime -= Time.deltaTime;
+        //   HP = testTime;
         BarHPCurrent.fillAmount = Mathf.Clamp01(HP / MAXHP);
     }
 }
