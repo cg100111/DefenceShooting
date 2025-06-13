@@ -1,30 +1,34 @@
-using System;
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public struct DeployInfo
 {
     /// <summary>
-    /// ”hŒ­‚·‚éŠÔŠu
+    /// æ´¾é£ã™ã‚‹é–“éš”
     /// </summary>
     public float deployDelay;
 
     /// <summary>
-    /// ”hŒ­‚·‚éŠÔŠu‚Ì”ÍˆÍ
+    /// æ´¾é£ã™ã‚‹é–“éš”ã®ç¯„å›²
     /// </summary>
     public float deployDelayRange;
 
     /// <summary>
-    /// ”hŒ­‚·‚éƒJƒEƒ“ƒ^[
+    /// æ´¾é£ã™ã‚‹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
     /// </summary>
     [HideInInspector]
     public float deployCount;
 
     /// <summary>
-    /// Ÿ‚É”hŒ­‚·‚éƒ^ƒCƒ~ƒ“ƒO
+    /// æ¬¡ã«æ´¾é£ã™ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°
     /// </summary>
     [HideInInspector]
     public float deployTime;
+
+    public void NextDeployTime()
+    {
+        deployTime = Random.Range(deployDelay - deployDelayRange, deployDelay + deployDelayRange);
+    }
 }
