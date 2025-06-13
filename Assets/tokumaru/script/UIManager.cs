@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     GameObject button;
     GameObject gameOverText;
     GameObject BBG;
-    int appearCnt;
+    //int appearCnt;
     //GameObject score;
     // Start is called before the first frame update
     void Start()
@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
             gameOverText.SetActive(false);
         }
 
-        appearCnt = 0;
+        //appearCnt = 0;
     }
 
     // Update is called once per frame

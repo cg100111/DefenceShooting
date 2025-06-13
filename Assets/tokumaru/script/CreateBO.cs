@@ -11,6 +11,7 @@ public class CreateBO : MonoBehaviour
     Color color;
     PushButton pushButton;
     GameObject button;
+
     // Start is called before the first frame update
     void Start()
     {
