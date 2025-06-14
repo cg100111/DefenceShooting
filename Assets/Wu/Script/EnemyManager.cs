@@ -13,27 +13,20 @@ enum EnemyType
 public class EnemyManager : MonoBehaviour
 {
     private ObjectPool baseEnemyPool;
-
+    private ObjectPool baseWeaponEnemyPool;
     private PlayerScript player;
 
     /// <summary>
-    /// 派遣の間隔
+    /// 一般敵を派遣するための関連資料
     /// </summary>
     [SerializeField]
-    private float spawnDelay;
+    private DeployInfo baseEnemyDI;
 
     /// <summary>
-    /// 派遣間隔の範囲
+    /// 武器持ってる一般敵を派遣するための関連資料
     /// </summary>
     [SerializeField]
-    private float spawnDelayRange;
-
-    /// <summary>
-    /// 派遣カウンター
-    /// </summary>
-    private float deployCount;
-
-    private float deployTime;
+    private DeployInfo baseWeaponEnemyDI;
 
     /// <summary>
     /// 開始位置(上)
@@ -51,9 +44,12 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
-        deployCount = 0.0f;
-        deployTime = NextDeployTime();
+        baseEnemyDI.deployCount = 0.0f;
+        baseEnemyDI.NextDeployTime();
+        baseWeaponEnemyDI.deployCount = 0.0f;
+        baseWeaponEnemyDI.NextDeployTime();
         baseEnemyPool = GetComponentsInChildren<ObjectPool>().Where(c => c.CompareTag("BaseOP")).First();
+        baseWeaponEnemyPool = GetComponentsInChildren<ObjectPool>().Where(c => c.CompareTag("BaseSwordOP")).First();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
     }
 
@@ -64,27 +60,45 @@ public class EnemyManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        deployCount += Time.fixedDeltaTime;
-        if (deployCount >= deployTime)
+        float deltaTime = Time.fixedDeltaTime;
+        // 一般敵の派遣
+        if (IsTrigDeploy(ref baseEnemyDI, deltaTime))
         {
-            deployCount -= deployTime;
-            deployTime = NextDeployTime();
-            DeployEnemy();
+            DeployEnemy(baseEnemyPool);
+        }
+
+        // 武器持ってる一般敵
+        if (IsTrigDeploy(ref baseWeaponEnemyDI, deltaTime))
+        {
+            Debug.Log("Deploy weapon enemy");
+            DeployEnemy(baseWeaponEnemyPool);
         }
     }
 
-    private float NextDeployTime()
+    private bool IsTrigDeploy(ref DeployInfo DI, float deltaTime)
     {
-        return Random.Range(spawnDelay - spawnDelayRange, spawnDelay + spawnDelayRange);
+        DI.deployCount += deltaTime;
+        if (DI.deployCount >= DI.deployTime)
+        {
+            DI.deployCount -= DI.deployTime;
+            DI.NextDeployTime();
+            return true;
+        }
+        return false;
     }
 
-    private void DeployEnemy()
+    private float NextDeployTime(DeployInfo DI)
+    {
+        return Random.Range(DI.deployDelay - DI.deployDelayRange, DI.deployDelay + DI.deployDelayRange);
+    }
+
+    private void DeployEnemy(ObjectPool pool)
     {
         // 表示するlayerはintですから、敵のY座標もintにする、そうしないと変になる
         float startPosY = GetStartPos();
         Vector3 startPos = new(startTopPos.x, (int)startPosY, startTopPos.z);
 
-        Enemy enemy = baseEnemyPool.Borrow();
+        Enemy enemy = pool.Borrow();
         if (enemy)
         {
             enemy.transform.position = startPos;
