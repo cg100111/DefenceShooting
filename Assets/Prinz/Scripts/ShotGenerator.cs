@@ -68,13 +68,12 @@ public class ShotGenerator : MonoBehaviour
 
         while (Input.GetMouseButton(0))
         {
-            //I want my Trajectory Prediction here if possible
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorld.z = 60.0f;
-            Vector3 direction = (mouseWorld - this.shotSpawnPos).normalized;
-            Vector3 velocity = direction * (MINSPEED + power);
+        //    Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+         //   mouseWorld.z = 60.0f;
+         //   Vector3 direction = (mouseWorld - this.shotSpawnPos).normalized;
+         //   Vector3 velocity = direction * (MINSPEED + power);
 
-            trajectory.ShowTrajectory(this.shotSpawnPos, velocity);
+         //   trajectory.ShowTrajectory(this.shotSpawnPos, velocity); //****WIP***
 
 
             power += Time.deltaTime * MAXPOWER / MAXCHARGETIMER;
@@ -101,14 +100,14 @@ public class ShotGenerator : MonoBehaviour
         worldPos.z = 60.0f;                                                 //ensure the Z alignment
         this.shotSpawnPos = shotgen.transform.position;      //give initial position to shot
 
-        //Vector3 direction = (worldPos - shotgen.transform.position).normalized;
-        //Vector3 velocity = direction * (MINSPEED + power);
+        Vector3 direction = (worldPos - shotgen.transform.position).normalized; //****************************WIP*********************
+        Vector3 velocity = direction * (MINSPEED + power);                        //**************************WIP******************
 
         // Instantiate the shot
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
         int damageValue = this.MAXDAMAGE * (int)(power * 1000 / MAXPOWER) / 1000;
         shot.GetComponent<Shot1Script>().SetGenerator(this);
-        shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (MINSPEED + power), power / 3, damageValue);
+        shot.GetComponent<Shot1Script>().Shoot(velocity, power / 3, damageValue);
         trajectory.Hide(); // This method disables or clears the LineRenderer
 
 
