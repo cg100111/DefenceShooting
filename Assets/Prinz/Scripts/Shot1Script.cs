@@ -38,7 +38,7 @@ public class Shot1Script : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boundaries"))
         {
             // Optional: Knockback (example, simple force away from bullet)
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -61,12 +61,32 @@ public class Shot1Script : MonoBehaviour
             }
 
         }
+        //else if (collision.gameObject.CompareTag("Boundaries"))
+        //{
+        //    Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+        //    if (rb != null)
+        //    {
+        //        if (this.bounceCnt <= 0)
+        //        {
+        //            Destroy(gameObject);
+        //        }
+        //        else
+        //        {
+        //            this.bounceCnt--;
+        //        }
+        //    }
+        //}
     }
 
 
     public int GetDamageValue()
     {
         return damageValue;
+    }
+
+    public int GetBounceCnt()
+    {
+        return this.bounceCnt;
     }
 
     // Start is called before the first frame update
