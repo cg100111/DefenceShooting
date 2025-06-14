@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
+//using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,18 +9,23 @@ using UnityEngine.UIElements.Experimental;
 public class ShotGenerator : MonoBehaviour
 {
     public GameObject   Shot1Prefab;
+    [SerializeField] private TrajectoryPred trajectory;
+    [SerializeField] private Transform shotSpawnPoint; // Reference to where the shot spawns
+
+
     public Image        BarPowerCurrent;
     public Image        BarPowerBase;
+
     public AudioClip    SECharge;
     public AudioClip[]  SEShoot;
     public AudioClip[]  SEExplosion;
-
     AudioSource         aud;
 
     [SerializeField] private float  MAXPOWER = 100.0f;
     [SerializeField] private int    MAXDAMAGE = 10;
     [SerializeField] private float  MAXCHARGETIMER = 2.0f;
     [SerializeField] private float  MINSPEED = 30.0f;
+    Vector3 shotSpawnPos;
 
 
     // Start is called before the first frame update
@@ -35,7 +40,7 @@ public class ShotGenerator : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            this.aud.PlayOneShot(this.SECharge); //broken
+            this.aud.PlayOneShot(this.SECharge);
             Debug.Log("Mouse click");
 
 
@@ -63,6 +68,15 @@ public class ShotGenerator : MonoBehaviour
 
         while (Input.GetMouseButton(0))
         {
+            //I want my Trajectory Prediction here if possible
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorld.z = 60.0f;
+            Vector3 direction = (mouseWorld - this.shotSpawnPos).normalized;
+            Vector3 velocity = direction * (MINSPEED + power);
+
+            trajectory.ShowTrajectory(this.shotSpawnPos, velocity);
+
+
             power += Time.deltaTime * MAXPOWER / MAXCHARGETIMER;
             BarPowerCurrent.fillAmount = Mathf.Clamp01(power / MAXPOWER);
             if (power >= MAXPOWER)
@@ -85,13 +99,18 @@ public class ShotGenerator : MonoBehaviour
         mp.z = 60.0f - Camera.main.transform.position.z;                    //align mouse position in the Z axis
         UnityEngine.Vector3 worldPos = Camera.main.ScreenToWorldPoint(mp);  //make target's coordinates
         worldPos.z = 60.0f;                                                 //ensure the Z alignment
-        UnityEngine.Vector3 shotSpawnPos = shotgen.transform.position;      //give initial position to shot
+        this.shotSpawnPos = shotgen.transform.position;      //give initial position to shot
+
+        //Vector3 direction = (worldPos - shotgen.transform.position).normalized;
+        //Vector3 velocity = direction * (MINSPEED + power);
 
         // Instantiate the shot
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
         int damageValue = this.MAXDAMAGE * (int)(power * 1000 / MAXPOWER) / 1000;
         shot.GetComponent<Shot1Script>().SetGenerator(this);
         shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (MINSPEED + power), power / 3, damageValue);
+        trajectory.Hide(); // This method disables or clears the LineRenderer
+
 
         //サウンドエフェクト
         int randomSE = Random.Range(0, SEShoot.Length); // Random index 0 to 2

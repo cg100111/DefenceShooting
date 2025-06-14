@@ -107,6 +107,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3b031044731fe9345b76b7325ae2247d, type: 3}
   - {fileID: 8300000, guid: e6beb560b5f6fb34db189521430dc999, type: 3}
   damageValue: 2
+  MINDAMAGEVALUE: 2
   bounceCnt: 1
   ExplosionPrefab: {fileID: 3950369385985302198, guid: 2f8fba854a9018144b4ab6fa0aba8244, type: 3}
 --- !u!50 &-2261713229262906428
@@ -124,7 +125,7 @@ Rigidbody2D:
   m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 9.8
+  m_GravityScale: 9.81
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
