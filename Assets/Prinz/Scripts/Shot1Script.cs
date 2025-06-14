@@ -18,6 +18,7 @@ public class Shot1Script : MonoBehaviour
    // public int DV = 2;
 
     private ShotGenerator generator;
+    public GameObject ExplosionPrefab;
 
     public void SetGenerator(ShotGenerator gen)
     {
@@ -48,6 +49,10 @@ public class Shot1Script : MonoBehaviour
                 rb.AddForce(knockback.normalized * 10000f); // adjust force value
                 if (this.bounceCnt <= 0)
                 {
+                 //   ShotExplosion shotExplosion = GetComponent<ShotExplosion>();
+                    //    shotExplosion.EffectExplosion(gameObject.transform.position);
+                    Instantiate(ExplosionPrefab, this.transform.position, ExplosionPrefab.transform.rotation);
+
                     generator?.PlaySEexplosion(); // play SE safely
                     // Destroy bullet
                     Destroy(gameObject);
