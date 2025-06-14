@@ -22,13 +22,13 @@ public class PlayerScript : Character
     {
         //   testTime -= Time.deltaTime;
         //   HP = testTime;
-        BarHPCurrent.fillAmount = Mathf.Clamp01(HP / MAXHP);
+        BarHPCurrent.fillAmount = Mathf.Clamp01(this.HP / MAXHP);
     }
 
     private void ReduceHP(float amount)
     {
-        HP = Mathf.Min(0, amount);
-        if(HP <= 0)
+        this.HP = Mathf.Max(0, this.HP - amount);
+        if(this.HP <= 0)
         {
             StartCoroutine(EndingSceneTransition()); //エンディングシーンの切り替え
         }    
@@ -48,14 +48,21 @@ public class PlayerScript : Character
         SceneManager.LoadScene("EndingScene"); //タイマーが終わったら、エンディングに切り替える
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("EnemyAttackCollider"))
         {
-            float damage = collision.gameObject.GetComponent<Enemy>().GetAttackPower();
-            if (collision.gameObject.GetComponent<Enemy>().isAttack)
+            Enemy enemy = collision.GetComponentInParent<Enemy>();
+            if(enemy != null)
             {
+                float damage = enemy.GetAttackPower();
                 ReduceHP(damage);
+                Debug.Log($"Damage : {damage}");
+                Debug.Log($"player hp : {this.HP}");
+            }
+            else
+            {
+                Debug.LogWarning("Enemy component not found in parent!");
             }
         }
     }

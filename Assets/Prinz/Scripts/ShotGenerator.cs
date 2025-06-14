@@ -102,6 +102,7 @@ public class ShotGenerator : MonoBehaviour
     public void PlaySEexplosion()
     {
         int randomSE = Random.Range(0, SEExplosion.Length);
+    //    Debug.Log($"SE array select : {randomSE}");
         aud.PlayOneShot(SEExplosion[randomSE]);
     }
 
