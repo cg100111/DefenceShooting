@@ -8,16 +8,19 @@ using UnityEngine.UIElements.Experimental;
 
 public class ShotGenerator : MonoBehaviour
 {
-    public GameObject Shot1Prefab;
-    public Image BarPowerCurrent;
-    public Image BarPowerBase;
-    public AudioClip SECharge;
-    public AudioClip[] SEShoot;
-    public AudioClip[] SEExplosion;
+    public GameObject   Shot1Prefab;
+    public Image        BarPowerCurrent;
+    public Image        BarPowerBase;
+    public AudioClip    SECharge;
+    public AudioClip[]  SEShoot;
+    public AudioClip[]  SEExplosion;
 
-    AudioSource aud;
-    private const float MAXPOWER = 100.0f;
-    private const float MINSPEED = 30.0f;
+    AudioSource         aud;
+
+    [SerializeField] private float  MAXPOWER = 100.0f;
+    [SerializeField] private int    MAXDAMAGE = 10;
+    [SerializeField] private float  MAXCHARGETIMER = 2.0f;
+    [SerializeField] private float  MINSPEED = 30.0f;
 
 
     // Start is called before the first frame update
@@ -60,7 +63,7 @@ public class ShotGenerator : MonoBehaviour
 
         while (Input.GetMouseButton(0))
         {
-            power += Time.deltaTime * 33;
+            power += Time.deltaTime * MAXPOWER / MAXCHARGETIMER;
             BarPowerCurrent.fillAmount = Mathf.Clamp01(power / MAXPOWER);
             if (power >= MAXPOWER)
             {
@@ -69,8 +72,7 @@ public class ShotGenerator : MonoBehaviour
             yield return null; // wait for next frame
         }
 
-        //this.aud.Stop();
-
+        //バーのリセットと表示
         BarPowerCurrent.fillAmount = 0; //reset bar to 0
         BarPowerCurrent.gameObject.SetActive(false); // hide bars
         BarPowerBase.gameObject.SetActive(false );
@@ -78,6 +80,7 @@ public class ShotGenerator : MonoBehaviour
         // Find the shot generator
         GameObject shotgen = GameObject.Find("ShotGenerator");
 
+        //弾の位置を計算
         UnityEngine.Vector3 mp = Input.mousePosition;                       //take mouse position
         mp.z = 60.0f - Camera.main.transform.position.z;                    //align mouse position in the Z axis
         UnityEngine.Vector3 worldPos = Camera.main.ScreenToWorldPoint(mp);  //make target's coordinates
@@ -86,11 +89,15 @@ public class ShotGenerator : MonoBehaviour
 
         // Instantiate the shot
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
+        int damageValue = this.MAXDAMAGE * (int)(power * 1000 / MAXPOWER) / 1000;
         shot.GetComponent<Shot1Script>().SetGenerator(this);
-        shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (MINSPEED + power), power / 3);
+        shot.GetComponent<Shot1Script>().Shoot((worldPos - shotSpawnPos).normalized * (MINSPEED + power), power / 3, damageValue);
 
+        //サウンドエフェクト
         int randomSE = Random.Range(0, SEShoot.Length); // Random index 0 to 2
         aud.PlayOneShot(SEShoot[randomSE]);
+
+
         //--------------DEBUG LOGS-------------------------------
         //Debug.Log($"worldPos : {worldPos}");
         //Debug.Log($"bullSpanPos : {shotSpawnPos}");

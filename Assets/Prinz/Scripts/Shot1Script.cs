@@ -11,7 +11,9 @@ public class Shot1Script : MonoBehaviour
     AudioSource aud;
 
     [SerializeField]
-    private int damageValue = 2;
+    private int damageValue = 0;
+    [SerializeField]
+    private int MINDAMAGEVALUE = 2;
     [SerializeField]
     private int bounceCnt = 1;
 
@@ -24,12 +26,12 @@ public class Shot1Script : MonoBehaviour
     {
         generator = gen;
     }
-    public void Shoot(Vector3 dir, float spin)
+    public void Shoot(Vector3 dir, float spin, int damageValue)
     {
         Vector2 dir2D = new Vector2(dir.x, dir.y);
         GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
         GetComponent<Rigidbody2D>().AddTorque(spin, ForceMode2D.Impulse);
-        this.damageValue =  1 + (int)spin / 3;
+        this.damageValue =  Mathf.Max(this.MINDAMAGEVALUE , damageValue);
 
         Debug.Log($"Damage Value : {this.damageValue}"); //debug
 
