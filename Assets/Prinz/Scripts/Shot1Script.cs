@@ -11,24 +11,27 @@ public class Shot1Script : MonoBehaviour
     AudioSource aud;
 
     [SerializeField]
-    private int damageValue = 2;
+    private int damageValue = 0;
+    [SerializeField]
+    private int MINDAMAGEVALUE = 2;
     [SerializeField]
     private int bounceCnt = 1;
 
    // public int DV = 2;
 
     private ShotGenerator generator;
+    public GameObject ExplosionPrefab;
 
     public void SetGenerator(ShotGenerator gen)
     {
         generator = gen;
     }
-    public void Shoot(Vector3 dir, float spin)
+    public void Shoot(Vector3 dir, float spin, int damageValue)
     {
         Vector2 dir2D = new Vector2(dir.x, dir.y);
         GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
         GetComponent<Rigidbody2D>().AddTorque(spin, ForceMode2D.Impulse);
-        this.damageValue = (int)spin / 3;
+        this.damageValue =  Mathf.Max(this.MINDAMAGEVALUE , damageValue);
 
         Debug.Log($"Damage Value : {this.damageValue}"); //debug
 
@@ -38,11 +41,8 @@ public class Shot1Script : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boundaries"))
         {
-            // Apply damage
-        //    collision.gameObject.GetComponent<Enemy>().ReduceHP(DV);
-
             // Optional: Knockback (example, simple force away from bullet)
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (rb != null)
@@ -51,7 +51,11 @@ public class Shot1Script : MonoBehaviour
                 rb.AddForce(knockback.normalized * 10000f); // adjust force value
                 if (this.bounceCnt <= 0)
                 {
-                    generator?.SEexplosion(); // play SE safely
+                 //   ShotExplosion shotExplosion = GetComponent<ShotExplosion>();
+                    //    shotExplosion.EffectExplosion(gameObject.transform.position);
+                    Instantiate(ExplosionPrefab, this.transform.position, ExplosionPrefab.transform.rotation);
+
+                    generator?.PlaySEexplosion(); // play SE safely
                     // Destroy bullet
                     Destroy(gameObject);
                 }
@@ -64,12 +68,32 @@ public class Shot1Script : MonoBehaviour
             }
 
         }
+        //else if (collision.gameObject.CompareTag("Boundaries"))
+        //{
+        //    Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+        //    if (rb != null)
+        //    {
+        //        if (this.bounceCnt <= 0)
+        //        {
+        //            Destroy(gameObject);
+        //        }
+        //        else
+        //        {
+        //            this.bounceCnt--;
+        //        }
+        //    }
+        //}
     }
 
 
     public int GetDamageValue()
     {
         return damageValue;
+    }
+
+    public int GetBounceCnt()
+    {
+        return this.bounceCnt;
     }
 
     // Start is called before the first frame update
