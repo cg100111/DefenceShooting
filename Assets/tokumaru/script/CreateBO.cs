@@ -11,6 +11,7 @@ public class CreateBO : MonoBehaviour
     Color color;
     PushButton pushButton;
     GameObject button;
+    public bool countstart;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,8 @@ public class CreateBO : MonoBehaviour
         color.a = 0.0f;
         image.color = color;
         button = GameObject.Find("Button");
-        if(button != null)
+        countstart = false;
+        if (button != null)
         {
             pushButton = button.GetComponent<PushButton>();
         }
@@ -33,15 +35,14 @@ public class CreateBO : MonoBehaviour
             return;
         }
 
-        if (pushButton.sceneChange)
+        if (countstart)
         {
             color.a += 0.002f;
             image.color = color;
             if (color.a >= 1.0f)
             {
-                pushButton.sceneChange = false;
-                SceneManager.LoadScene("Title");
-
+                GManager.instance.SceneChange();
+                countstart = false;
             }
         }
     }
