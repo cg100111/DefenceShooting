@@ -60,22 +60,38 @@ public class ShotGenerator : MonoBehaviour
         BarPowerCurrent.gameObject.SetActive(true); // show bars
         BarPowerBase.gameObject.SetActive(true);
 
-        if(Input.GetMouseButtonDown(1))  //debug
+        //shotGeneratorを見つける
+        GameObject shotgen = GameObject.Find("ShotGenerator");
+        //弾の座標を設定する
+        Vector3 shotSpawnPos = shotgen.transform.position;
+
+
+        if (Input.GetMouseButtonDown(1))  //debug
         {
 
 
         }
 
+ 
         while (Input.GetMouseButton(0))
         {
-        //    Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-         //   mouseWorld.z = 60.0f;
-         //   Vector3 direction = (mouseWorld - this.shotSpawnPos).normalized;
-         //   Vector3 velocity = direction * (MINSPEED + power);
+            //位置を毎フレーム計算
+            //弾の位置を計算
+            Vector3 mp = Input.mousePosition;                       //take mouse position
+            mp.z = 60.0f - Camera.main.transform.position.z;                    //align mouse position in the Z axis
+            Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mp);  //make target's coordinates
+            worldMousePos.z = 60.0f;                                                 //ensure the Z alignment
+            this.shotSpawnPos = shotgen.transform.position;      //give initial position to shot
 
-         //   trajectory.ShowTrajectory(this.shotSpawnPos, velocity); //****WIP***
 
 
+            Vector3 direction = (worldMousePos - this.shotSpawnPos).normalized;
+            Vector3 velocity = direction * (MINSPEED + power);
+
+            //軌道予測線
+            trajectory.ShowTrajectory(this.shotSpawnPos, velocity);
+
+            //チャージ
             power += Time.deltaTime * MAXPOWER / MAXCHARGETIMER;
             BarPowerCurrent.fillAmount = Mathf.Clamp01(power / MAXPOWER);
             if (power >= MAXPOWER)
@@ -85,31 +101,25 @@ public class ShotGenerator : MonoBehaviour
             yield return null; // wait for next frame
         }
 
-        //バーのリセットと表示
-        BarPowerCurrent.fillAmount = 0; //reset bar to 0
-        BarPowerCurrent.gameObject.SetActive(false); // hide bars
+        //バーと軌道予測線のリセットと非表示
+        BarPowerCurrent.fillAmount = 0;                 //reset bar to 0
+        BarPowerCurrent.gameObject.SetActive(false);    // hide bars
         BarPowerBase.gameObject.SetActive(false );
+        trajectory.Hide();
 
-        // Find the shot generator
-        GameObject shotgen = GameObject.Find("ShotGenerator");
+        //弾の方向を決める
+        Vector3 finalMousePos = Input.mousePosition;
+        finalMousePos.z = 60.0f - Camera.main.transform.position.z;
+        Vector3 finalWorldPos = Camera.main.ScreenToWorldPoint(finalMousePos);
+        finalWorldPos.z = 60.0f;
+        Vector3 finalDirection = (finalWorldPos - shotSpawnPos).normalized;
+        Vector3 finalVelocity = finalDirection * (MINSPEED + power);
 
-        //弾の位置を計算
-        UnityEngine.Vector3 mp = Input.mousePosition;                       //take mouse position
-        mp.z = 60.0f - Camera.main.transform.position.z;                    //align mouse position in the Z axis
-        UnityEngine.Vector3 worldPos = Camera.main.ScreenToWorldPoint(mp);  //make target's coordinates
-        worldPos.z = 60.0f;                                                 //ensure the Z alignment
-        this.shotSpawnPos = shotgen.transform.position;      //give initial position to shot
-
-        Vector3 direction = (worldPos - shotgen.transform.position).normalized; //****************************WIP*********************
-        Vector3 velocity = direction * (MINSPEED + power);                        //**************************WIP******************
-
-        // Instantiate the shot
+        //弾を生成する
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
         int damageValue = this.MAXDAMAGE * (int)(power * 1000 / MAXPOWER) / 1000;
         shot.GetComponent<Shot1Script>().SetGenerator(this);
-        shot.GetComponent<Shot1Script>().Shoot(velocity, power / 3, damageValue);
-        trajectory.Hide(); // This method disables or clears the LineRenderer
-
+        shot.GetComponent<Shot1Script>().Shoot(finalVelocity, power / 3, damageValue);
 
         //サウンドエフェクト
         int randomSE = Random.Range(0, SEShoot.Length); // Random index 0 to 2
