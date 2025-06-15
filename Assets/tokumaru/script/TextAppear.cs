@@ -7,14 +7,16 @@ public class TextAppear : MonoBehaviour
 {
     public Image image;
     Color color;
-    float addAlpha;
+
+    [SerializeField]
+    private float addAlpha;
     // Start is called before the first frame update
     void Start()
     {
         color = image.color;
         color.a = 0.0f;
         image.color = color;
-        addAlpha = 0.01f;
+        //addAlpha = 0.01f;
     }
 
     // Update is called once per frame
