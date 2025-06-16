@@ -43,20 +43,17 @@ public class Shot1Script : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boundaries"))
         {
-            // Optional: Knockback (example, simple force away from bullet)
+            //当たり判定
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            if (rb != null /*&& enemy state active*/)
             {
                 Vector2 knockback = collision.transform.position - transform.position;
                 rb.AddForce(knockback.normalized * 10000f); // adjust force value
                 if (this.bounceCnt <= 0)
                 {
-                 //   ShotExplosion shotExplosion = GetComponent<ShotExplosion>();
-                    //    shotExplosion.EffectExplosion(gameObject.transform.position);
                     Instantiate(ExplosionPrefab, this.transform.position, ExplosionPrefab.transform.rotation);
-
-                    generator?.PlaySEexplosion(); // play SE safely
-                    // Destroy bullet
+                //    generator?.PlaySEexplosion(); // play SE safely
+                    //弾消滅
                     Destroy(gameObject);
                 }
                 else
@@ -68,21 +65,6 @@ public class Shot1Script : MonoBehaviour
             }
 
         }
-        //else if (collision.gameObject.CompareTag("Boundaries"))
-        //{
-        //    Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-        //    if (rb != null)
-        //    {
-        //        if (this.bounceCnt <= 0)
-        //        {
-        //            Destroy(gameObject);
-        //        }
-        //        else
-        //        {
-        //            this.bounceCnt--;
-        //        }
-        //    }
-        //}
     }
 
 
