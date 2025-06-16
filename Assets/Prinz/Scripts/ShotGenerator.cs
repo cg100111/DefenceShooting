@@ -41,7 +41,7 @@ public class ShotGenerator : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             this.aud.PlayOneShot(this.SECharge);
-            Debug.Log("Mouse click");
+        //    Debug.Log("Mouse click");
 
 
             StartCoroutine(ChargeAndFire());
