@@ -13,6 +13,9 @@ public class CreateBO : MonoBehaviour
     GameObject button;
     public bool countstart;
 
+    [SerializeField]
+    private float addAlpha;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +24,7 @@ public class CreateBO : MonoBehaviour
         image.color = color;
         button = GameObject.Find("Button");
         countstart = false;
-        if (button != null)
+        if (button)
         {
             pushButton = button.GetComponent<PushButton>();
         }
@@ -37,7 +40,7 @@ public class CreateBO : MonoBehaviour
 
         if (countstart)
         {
-            color.a += 0.002f;
+            color.a += addAlpha;
             image.color = color;
             if (color.a >= 1.0f)
             {
