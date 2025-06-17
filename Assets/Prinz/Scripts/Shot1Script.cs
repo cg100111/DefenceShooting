@@ -17,16 +17,17 @@ public class Shot1Script : MonoBehaviour
     [SerializeField]
     private int bounceCnt = 1;
 
-   // public int DV = 2;
+    private bool isMaxPower = false;
 
     private ShotGenerator generator;
     public GameObject ExplosionPrefab;
+    public GameObject ExpandingExplosion;
 
     public void SetGenerator(ShotGenerator gen)
     {
         generator = gen;
     }
-    public void Shoot(Vector3 dir, float spin, int damageValue)
+    public void Shoot(Vector3 dir, float spin, int damageValue, bool isMaxPower)
     {
         Vector2 dir2D = new Vector2(dir.x, dir.y);
         GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
@@ -36,7 +37,8 @@ public class Shot1Script : MonoBehaviour
         Debug.Log($"Damage Value : {this.damageValue}"); //debug
 
         this.aud = GetComponent<AudioSource>();
-        //   Debug.Log($"dir : {dir}");
+
+        this.isMaxPower = isMaxPower;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -49,8 +51,14 @@ public class Shot1Script : MonoBehaviour
             {
                 Vector2 knockback = collision.transform.position - transform.position;
                 rb.AddForce(knockback.normalized * 10000f); // adjust force value
-                if (this.bounceCnt <= 0)
+                if (this.isMaxPower)
                 {
+                    Instantiate(ExpandingExplosion, this.transform.position, ExpandingExplosion.transform.rotation);
+                    Destroy(gameObject);
+                }
+                else if (this.bounceCnt <= 0)
+                {
+                    ExplosionPrefab.transform.localScale = new Vector3(20, 20, 0);
                     Instantiate(ExplosionPrefab, this.transform.position, ExplosionPrefab.transform.rotation);
                 //    generator?.PlaySEexplosion(); // play SE safely
                     //弾消滅

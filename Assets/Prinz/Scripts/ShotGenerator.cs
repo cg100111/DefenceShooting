@@ -26,6 +26,7 @@ public class ShotGenerator : MonoBehaviour
     [SerializeField] private float  MAXCHARGETIMER = 2.0f;
     [SerializeField] private float  MINSPEED = 30.0f;
     Vector3 shotSpawnPos;
+    private bool isMaxPower = false;
 
 
     // Start is called before the first frame update
@@ -96,16 +97,17 @@ public class ShotGenerator : MonoBehaviour
             BarPowerCurrent.fillAmount = Mathf.Clamp01(power / MAXPOWER);
             if (power >= MAXPOWER)
             {
+                this.isMaxPower = true;
                 break;
             }
             yield return null; // wait for next frame
         }
 
         //バーと軌道予測線のリセットと非表示
-        BarPowerCurrent.fillAmount = 0;                 //reset bar to 0
-        BarPowerCurrent.gameObject.SetActive(false);    // hide bars
-        BarPowerBase.gameObject.SetActive(false );
-        trajectory.Hide();
+        BarPowerCurrent.fillAmount = 0;                 //バーを0にリセット
+        BarPowerCurrent.gameObject.SetActive(false);    //バーを隠す
+        BarPowerBase.gameObject.SetActive(false );      //バーを隠す
+        trajectory.Hide();                              //予測線を隠す
 
         //弾の方向を決める
         Vector3 finalMousePos = Input.mousePosition;
@@ -119,12 +121,14 @@ public class ShotGenerator : MonoBehaviour
         GameObject shot = Instantiate(Shot1Prefab, shotSpawnPos, UnityEngine.Quaternion.identity);
         int damageValue = this.MAXDAMAGE * (int)(power * 1000 / MAXPOWER) / 1000;
         shot.GetComponent<Shot1Script>().SetGenerator(this);
-        shot.GetComponent<Shot1Script>().Shoot(finalVelocity, power / 3, damageValue);
+        shot.GetComponent<Shot1Script>().Shoot(finalVelocity, power / 3, damageValue, this.isMaxPower);
 
         //サウンドエフェクト
         int randomSE = Random.Range(0, SEShoot.Length); // Random index 0 to 2
         aud.PlayOneShot(SEShoot[randomSE]);
 
+        //リセット
+        this.isMaxPower = false;
 
         //--------------DEBUG LOGS-------------------------------
         //Debug.Log($"worldPos : {worldPos}");
