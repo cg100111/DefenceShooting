@@ -13,7 +13,7 @@ public class Enemy : Character
     protected Rigidbody2D body;
     protected EnemyManager manager;
     protected Animator animator;
-    protected CircleCollider2D attackCollider;
+    protected Collider2D attackCollider;
     protected PlayerScript target;
     protected StateManager stateManager;
     protected AudioSource soundPlayer;
@@ -67,11 +67,10 @@ public class Enemy : Character
     /// </summary>
     public HitDir hitDir { get; private set; }
 
-    private void Awake()
+    public virtual void Awake()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
-        attackCollider = gameObject.GetComponentInChildren<CircleCollider2D>();
         stateManager = new StateManager();
         soundPlayer = gameObject.GetComponent<AudioSource>();
     }
@@ -217,6 +216,19 @@ public class Enemy : Character
         if (!isHit && !isAttack && collision.gameObject.CompareTag("Player"))
         {
             isAttack = true;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isHit && collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            if (transform.position.x < collision.transform.position.x)
+                hitDir = HitDir.back;
+            else
+                hitDir = HitDir.front;
+            // get Bullet attack power
+            ReduceHP(Mathf.CeilToInt(MAX_HP));
         }
     }
 }

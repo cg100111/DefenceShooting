@@ -12,10 +12,13 @@ public class WeaponEnemyIdleState : BaseState
     {
         Enemy mine = (Enemy)me;
         mine.GetAnimator().Play("Idle");
+        mine.GetComponent<CapsuleCollider2D>().enabled = false;
     }
 
     public override void ExitState()
     {
+        Enemy mine = (Enemy)me;
+        mine.GetComponent<CapsuleCollider2D>().enabled = true;
     }
 
     public override void UpdateState(Character target)

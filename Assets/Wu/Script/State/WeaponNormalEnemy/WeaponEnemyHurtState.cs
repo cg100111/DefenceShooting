@@ -28,7 +28,7 @@ public class WeaponEnemyHurtState : BaseState
         Enemy mine = (Enemy)me;
         if (!mine.isHit)
         {
-            manager.ChangeState(new EnemyWalkState(me, manager));
+            manager.ChangeState(new WeaponEnemyWalkState(me, manager));
         }
     }
 }
