@@ -17,14 +17,17 @@ public class UIManager : MonoBehaviour
     //[SerializeField] private GameObject scoreUIPrefabToEnding;
     //GameObject scoreUIToEnding;
 
-    //[SerializeField] private Transform scoreUITransformToGame;
-    // [SerializeField] private GameObject scoreUIPrefabToGame;
-    //GameObject scoreUIToGame;
+    [SerializeField]
+    private GameObject scoreUIPrefabToGame;
+    GameObject scoreUIToGame;
+    Vector3 test;
+
     void Awake()
     {
-        GManager.instance.GetSetScene = GManager.GameScene.Ending;
+        //GManager.instance.GetSetScene = GManager.GameScene.Ending;
         if(uiInstance == null)
         {
+            test = new Vector3(0, 0, 0);
             uiInstance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -63,24 +66,32 @@ public class UIManager : MonoBehaviour
     //}
 
 
-    //public GameObject AppearScoreUIToGame()
-    //{
-    //    scoreUIToGame = Instantiate(scoreUIPrefabToGame, scoreUITransformToGame);
-    //    scoreUIToGame.GetComponent<ScoreText>().SetText("åÇîjêî " + GManager.instance.GetSetScore.ToString());
-    //    return scoreUIToGame;
-    //}
+    public GameObject AppearScoreUIToGame()
+    {
+        GameObject scoreUI = GameObject.Find("scoreUI");
+        if (scoreUI)
+        {
+            RectTransform rect = scoreUI.GetComponent<RectTransform>();
+            scoreUIToGame = Instantiate(scoreUIPrefabToGame, rect);
+
+        }
+        //scoreUIToGame = Instantiate(scoreUIPrefabToGame, test, Quaternion.identity);
+        //scoreUIToGame.GetComponent<ScoreText>().SetText("åÇîjêî " + GManager.instance.GetSetScore.ToString());
+        return scoreUIToGame;
+    }
 
 
-
-    //public void DestroyUIToGame()
-    //{
-    //    Destroy(scoreUIToGame);
-    //}
+    public void DestroyUIToGame()
+    {
+        Destroy(scoreUIToGame);
+    }
 
     //public void DestroyUIToEnding()
     //{
     //    Destroy(scoreUIToEnding);
     //}
+
+
     // Start is called before the first frame update
     void Start()
     {

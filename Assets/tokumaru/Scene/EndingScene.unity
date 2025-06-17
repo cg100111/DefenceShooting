@@ -220,7 +220,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261880577}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneChange: 0
-  nowScene: 0
+  nowScene: 3
 --- !u!4 &636818022
 Transform:
   m_ObjectHideFlags: 0
@@ -530,13 +530,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708793890}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 955223956}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &708793892
 SpriteRenderer:
@@ -808,7 +808,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &857877236
 GameObject:
@@ -862,7 +862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 857877239}
-  addAlpha: 0.005
+  addAlpha: 0.01
 --- !u!114 &857877239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,6 +954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 923464957}
   countstart: 0
+  addAlpha: 0.1
 --- !u!114 &923464957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1088,9 +1089,10 @@ RectTransform:
   m_Children:
   - {fileID: 1420560880}
   - {fileID: 857877237}
-  - {fileID: 261880578}
   - {fileID: 1278688929}
+  - {fileID: 261880578}
   - {fileID: 923464955}
+  - {fileID: 708793891}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1128,6 +1130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8748b91bcfcaafa4699699d13f4b6918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreUIPrefabToGame: {fileID: 6780151431595320634, guid: d59240ab713500b41b09f3eb8f56721a, type: 3}
 --- !u!4 &1035466865
 Transform:
   m_ObjectHideFlags: 0

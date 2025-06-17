@@ -25,8 +25,11 @@ public class GManager : MonoBehaviour
 
     public bool sceneChange;
 
-    private GameScene scene;
+    [SerializeField]
     public GameScene nowScene;
+    private GameScene scene;
+
+
     public static GManager instance = null;
     public static int score = 0;
     //public bool sceneCnageOK = true;
@@ -36,13 +39,11 @@ public class GManager : MonoBehaviour
     {
         if (!instance)
         {
-            Debug.Log("awake");
             DontDestroyOnLoad(gameObject);
             instance = this;
-            scene = GameScene.Ending;
-            nowScene = GameScene.Ending;
+            scene = nowScene;
             sceneChange = true;
-}
+        }
         else
         {
             Destroy(this.gameObject);
@@ -84,14 +85,18 @@ public class GManager : MonoBehaviour
             {
                 case GameScene.Title:
                     LoadSceneTitle();
+                    Debug.Log("titleload");
                     break;
                 case GameScene.Game:
                     LoadSceneGame();
+                    Debug.Log("GameLoad");
                     break; 
                 case GameScene.Ending:
+                    Debug.Log("Ending");
                     LoadSceneEnding();
                     break;
                 default:
+                    Debug.Log("default");
                     break;
             }
         }
@@ -114,7 +119,7 @@ public class GManager : MonoBehaviour
         if (sceneChange)
         {
 
-            //UIManager.uiInstance.AppearScoreUIToGame();
+            UIManager.uiInstance.AppearScoreUIToGame();
             sceneChange = false;
         }
         else
@@ -138,7 +143,6 @@ public class GManager : MonoBehaviour
     {
         if (sceneChange)
         {
-            //UIManager.uiInstance.AppearScoreUIToEnding();
             sceneChange = false;
         }
         else
@@ -178,17 +182,15 @@ public class GManager : MonoBehaviour
         {
             case GameScene.Title:
                 nowScene = GameScene.Game;
-                //SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Game");
                 break;
             case GameScene.Game:
                 nowScene = GameScene.Ending;
-                //UIManager.uiInstance.DestroyUIToGame();
-                //SceneManager.LoadScene("Ending");
+                UIManager.uiInstance.DestroyUIToGame();
+                SceneManager.LoadScene("Ending");
                 break;
             case GameScene.Ending:
-                Debug.Log("non");
                 nowScene = GameScene.Title;
-                //UIManager.uiInstance.DestroyUIToEnding();
                 ResetScore();
                 SceneManager.LoadScene("Title");
                 break;

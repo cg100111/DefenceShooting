@@ -4,36 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ScoreText : MonoBehaviour
+public class ScoreTextGame : MonoBehaviour
 {
-    Color color;
-
-    [SerializeField]
-    private float addAlpha;
-
     TextMeshProUGUI text;
     // Start is called before the first frame update
     void Start()
     {
         text = gameObject.GetComponent<TextMeshProUGUI>();
-        color = text.color;
-        color.a = 0.0f;
-        text.color = color;
         text.text = "åÇîjêî " + GManager.instance.GetSetScore.ToString() + "ëÃ";
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (color.a <= 1.0f)
-        {
-            color.a += addAlpha;
-            text.color = color;
-        }
-    }
-
-    public void SetText(string text_)
-    {
-        text.text = text_;
+        text.text = "åÇîjêî " + GManager.instance.GetSetScore.ToString() + "ëÃ";
     }
 }
