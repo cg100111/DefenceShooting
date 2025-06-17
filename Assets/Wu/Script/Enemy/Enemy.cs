@@ -17,6 +17,7 @@ public class Enemy : Character
     protected PlayerScript target;
     protected StateManager stateManager;
     protected AudioSource soundPlayer;
+    private GManager gManager;
     [SerializeField]
     private AudioClip deathSE;
     [SerializeField]
@@ -73,6 +74,7 @@ public class Enemy : Character
         animator = gameObject.GetComponent<Animator>();
         stateManager = new StateManager();
         soundPlayer = gameObject.GetComponent<AudioSource>();
+        gManager = GameObject.Find("GameManager").GetComponent<GManager>();
     }
 
     // Start is called before the first frame update
@@ -158,6 +160,12 @@ public class Enemy : Character
         soundPlayer.Play();
     }
 
+    public void PlayAttackSE()
+    {
+        soundPlayer.clip = attackSE;
+        soundPlayer.Play();
+    }
+
     public float GetAttackPower()
     {
         return attackPower;
@@ -192,6 +200,7 @@ public class Enemy : Character
 
     public virtual void DeathFinished()
     {
+        gManager.GetSetScore = 1;
         manager.RecycleEnemy(this);
     }
 
