@@ -18,9 +18,18 @@ public class PushButton : MonoBehaviour
     GameObject BO;
     CreateBO createBO;
 
+    GameObject bgm;
+    AudioSource audioSourceBGM;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        bgm = GameObject.Find("EndingBGM");
+        if (bgm)
+        {
+            audioSourceBGM = bgm.GetComponent<AudioSource>();
+        }
         audioSouce = GetComponent<AudioSource>();
         color = image.color;
         animator = gameObject.GetComponent<Animator>();
@@ -54,11 +63,12 @@ public class PushButton : MonoBehaviour
 
     public void OnButtonClick()
     {
+        audioSourceBGM.Stop();
         pushButton = true;
         animator.SetBool("OnPush", true);
         createBO.countstart = true;
-        //audioSouce.PlayOneShot(push);
-        audioSouce.Play();
+        audioSouce.PlayOneShot(push);
+        //audioSouce.Play();
         Debug.Log("animator,PushButton true");
     }
 }

@@ -377,6 +377,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &619645375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 619645376}
+  m_Layer: 0
+  m_Name: scoreUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &619645376
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619645375}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2070849225}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -760, y: 500}
+  m_SizeDelta: {x: 400, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &641211760
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +710,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shot1Prefab: {fileID: 2232586200701967991, guid: 660d3640a3559ea4a947c75e360ae807, type: 3}
+  trajectory: {fileID: 0}
+  shotSpawnPoint: {fileID: 0}
   BarPowerCurrent: {fileID: 948897416}
   BarPowerBase: {fileID: 911853534}
   SECharge: {fileID: 8300000, guid: 3ddc9fe048cc9ec43968cc8e32760d51, type: 3}
@@ -682,6 +720,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 760792d7a2d5f9941ad4d7c3c0a2a5df, type: 3}
   - {fileID: 8300000, guid: 821781a372efeff41af5d8f545ec8f23, type: 3}
   SEExplosion: []
+  MAXPOWER: 100
+  MAXDAMAGE: 10
+  MAXCHARGETIMER: 2
+  MINSPEED: 30
 --- !u!4 &903049901
 Transform:
   m_ObjectHideFlags: 0
@@ -1184,6 +1226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BarHPCurrent: {fileID: 1830376900}
   HP: 100
+  timerEndingTransition: 3
 --- !u!212 &1266219995
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1563,6 +1606,7 @@ RectTransform:
   m_Children:
   - {fileID: 911853533}
   - {fileID: 1004610823}
+  - {fileID: 619645376}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

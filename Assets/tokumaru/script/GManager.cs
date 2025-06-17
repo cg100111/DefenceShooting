@@ -25,8 +25,11 @@ public class GManager : MonoBehaviour
 
     public bool sceneChange;
 
-    private GameScene scene;
+    [SerializeField]
     public GameScene nowScene;
+    private GameScene scene;
+
+
     public static GManager instance = null;
     public static int score = 0;
     //public bool sceneCnageOK = true;
@@ -36,13 +39,11 @@ public class GManager : MonoBehaviour
     {
         if (!instance)
         {
-            Debug.Log("awake");
             DontDestroyOnLoad(gameObject);
             instance = this;
-            scene = GameScene.Ending;
-            nowScene = GameScene.Ending;
+            scene = nowScene;
             sceneChange = true;
-}
+        }
         else
         {
             Destroy(this.gameObject);
@@ -54,13 +55,14 @@ public class GManager : MonoBehaviour
     //    get { return instance; }
     //    private set { }
     //}
-
+    
     public GameScene GetSetScene
     {
         get { return nowScene; }
         set { nowScene = value;}
     }
 
+    //スコアの取得・加算
     public int GetSetScore
     {
         get { return score; }
@@ -83,19 +85,24 @@ public class GManager : MonoBehaviour
             {
                 case GameScene.Title:
                     LoadSceneTitle();
+                    Debug.Log("titlestart");
                     break;
                 case GameScene.Game:
                     LoadSceneGame();
+                    Debug.Log("Gamestart");
                     break; 
                 case GameScene.Ending:
+                    Debug.Log("Endingstart");
                     LoadSceneEnding();
                     break;
                 default:
+                    Debug.Log("default");
                     break;
             }
         }
     }
 
+    //それぞれのシーンにゲームマネージャーから追加するものの初期化処理
     void LoadSceneTitle()
     {
         if (sceneChange)
@@ -112,7 +119,7 @@ public class GManager : MonoBehaviour
         if (sceneChange)
         {
 
-            //UIManager.uiInstance.AppearScoreUIToGame();
+            UIManager.uiInstance.AppearScoreUIToGame();
             sceneChange = false;
         }
         else
@@ -136,7 +143,6 @@ public class GManager : MonoBehaviour
     {
         if (sceneChange)
         {
-            //UIManager.uiInstance.AppearScoreUIToEnding();
             sceneChange = false;
         }
         else
@@ -144,6 +150,7 @@ public class GManager : MonoBehaviour
             return;
         }
     }
+    //-------------------------------------------------------------------
 
 
     bool ColectScene()
@@ -156,6 +163,7 @@ public class GManager : MonoBehaviour
         return false;
     }
 
+    //スコアのリセット
     public void ResetScore()
     {
         score = 0;
@@ -166,25 +174,28 @@ public class GManager : MonoBehaviour
         score = score_;
     }
 
+
+    //シーンの切り替えを行う、マネージャーから追加したものの削除もここで行う。（あれば）
     public void SceneChange()
     {
         switch (nowScene)
         {
             case GameScene.Title:
                 nowScene = GameScene.Game;
-                //SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Game");
+                Debug.Log("GameLoad");
                 break;
             case GameScene.Game:
                 nowScene = GameScene.Ending;
-                //UIManager.uiInstance.DestroyUIToGame();
-                //SceneManager.LoadScene("Ending");
+                UIManager.uiInstance.DestroyUIToGame();
+                SceneManager.LoadScene("Ending");
+                Debug.Log("EndingLoad");
                 break;
             case GameScene.Ending:
-                Debug.Log("non");
                 nowScene = GameScene.Title;
-                //UIManager.uiInstance.DestroyUIToEnding();
                 ResetScore();
                 SceneManager.LoadScene("Title");
+                Debug.Log("titleload");
                 break;
             default:
                 break;

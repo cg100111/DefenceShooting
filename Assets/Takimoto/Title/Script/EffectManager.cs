@@ -19,7 +19,6 @@ public class EffectManager : MonoBehaviour
         {
             mousePos = Input.mousePosition;
             mousePos.z = 10.0f;
-            Debug.Log("x:" + mousePos.x + "    y:" + mousePos.y);
 
             Instantiate(ExplosionPrefab, Camera.main.ScreenToWorldPoint(mousePos), ExplosionPrefab.transform.rotation);
         }
