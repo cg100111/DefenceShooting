@@ -54,13 +54,14 @@ public class GManager : MonoBehaviour
     //    get { return instance; }
     //    private set { }
     //}
-
+    
     public GameScene GetSetScene
     {
         get { return nowScene; }
         set { nowScene = value;}
     }
 
+    //スコアの取得・加算
     public int GetSetScore
     {
         get { return score; }
@@ -96,6 +97,7 @@ public class GManager : MonoBehaviour
         }
     }
 
+    //それぞれのシーンにゲームマネージャーから追加するものの初期化処理
     void LoadSceneTitle()
     {
         if (sceneChange)
@@ -144,6 +146,7 @@ public class GManager : MonoBehaviour
             return;
         }
     }
+    //-------------------------------------------------------------------
 
 
     bool ColectScene()
@@ -156,6 +159,7 @@ public class GManager : MonoBehaviour
         return false;
     }
 
+    //スコアのリセット
     public void ResetScore()
     {
         score = 0;
@@ -166,6 +170,8 @@ public class GManager : MonoBehaviour
         score = score_;
     }
 
+
+    //シーンの切り替えを行う、マネージャーから追加したものの削除もここで行う。（あれば）
     public void SceneChange()
     {
         switch (nowScene)
