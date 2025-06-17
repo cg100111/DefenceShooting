@@ -14,7 +14,9 @@ public class PushButton : MonoBehaviour
     bool pushButton;
     float timer;
     float limit;
-    public bool sceneChange;
+
+    GameObject BO;
+    CreateBO createBO;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,13 @@ public class PushButton : MonoBehaviour
         pushButton = false;
         timer = 0.0f;
         limit = 30.0f;
-        sceneChange = false;
+
+        BO = GameObject.Find("BBG");
+        if (BO)
+        {
+            createBO = BO.GetComponent<CreateBO>();
+        }
+
     }
 
     // Update is called once per frame
@@ -37,7 +45,7 @@ public class PushButton : MonoBehaviour
             {
                 animator.SetBool("OnPush", false);
                 pushButton = false;
-                sceneChange = true;
+                //GManager.instance.sceneChange = true;
                 Debug.Log("animator,PushButton false");
             }
             timer += 1.0f;
@@ -48,6 +56,7 @@ public class PushButton : MonoBehaviour
     {
         pushButton = true;
         animator.SetBool("OnPush", true);
+        createBO.countstart = true;
         //audioSouce.PlayOneShot(push);
         audioSouce.Play();
         Debug.Log("animator,PushButton true");

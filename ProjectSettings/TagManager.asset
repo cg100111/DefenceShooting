@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - BaseOP
   - EnemyAttackCollider
+  - BaseSwordOP
+  - Boundaries
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - UI
   - Enemy
   - PlayerBullet
-  - 
+  - Boundaries
   - 
   - 
   - 

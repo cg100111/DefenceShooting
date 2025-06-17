@@ -102,16 +102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681cdc1c58f2e594c937259022dc7cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SEexplosion:
-  - {fileID: 8300000, guid: 41727d0bffafbb54fbe76c488c7add0c, type: 3}
-  - {fileID: 8300000, guid: ab0a41e7b1cc33a4dbc63a622552bd1d, type: 3}
-  - {fileID: 8300000, guid: fd2fa47ebfe096748b20b996a6c96ce2, type: 3}
   SEbounce:
   - {fileID: 8300000, guid: 72c4408156a580941adffa25467ef0b7, type: 3}
   - {fileID: 8300000, guid: 3b031044731fe9345b76b7325ae2247d, type: 3}
   - {fileID: 8300000, guid: e6beb560b5f6fb34db189521430dc999, type: 3}
   damageValue: 2
-  DV: 2
+  MINDAMAGEVALUE: 2
+  bounceCnt: 1
+  ExplosionPrefab: {fileID: 3950369385985302198, guid: 2f8fba854a9018144b4ab6fa0aba8244, type: 3}
+  ExpandingExplosion: {fileID: 3803207988169645065, guid: aff054f4e11e5bd4187d02cd825b7920, type: 3}
 --- !u!50 &-2261713229262906428
 Rigidbody2D:
   serializedVersion: 4
@@ -124,10 +123,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 0
+  m_GravityScale: 9.81
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -362,16 +361,16 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       minColor: {r: 1, g: 1, b: 1, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
-        key3: {r: 0, g: 0, b: 0, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 0.764151, g: 0.71584195, b: 0.24991095, a: 1}
+        key1: {r: 0.764151, g: 0.2138661, b: 0.2138661, a: 1}
+        key2: {r: 0, g: 0, b: 0, a: 1}
+        key3: {r: 0, g: 0, b: 0, a: 1}
+        key4: {r: 0, g: 0, b: 0, a: 1}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
@@ -385,14 +384,14 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 65535
-        atime2: 0
-        atime3: 0
-        atime4: 0
+        atime2: 56476
+        atime3: 56476
+        atime4: 56476
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_ColorSpace: -1
+        m_ColorSpace: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -744,7 +743,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    gravitySource: 0
+    gravitySource: 1
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -1064,7 +1063,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4938,10 +4937,10 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_RenderMode: 0
   m_MeshDistribution: 0
-  m_SortMode: 0
+  m_SortMode: 3
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
