@@ -70,7 +70,6 @@ public class EnemyManager : MonoBehaviour
         // 武器持ってる一般敵
         if (IsTrigDeploy(ref baseWeaponEnemyDI, deltaTime))
         {
-            Debug.Log("Deploy weapon enemy");
             DeployEnemy(baseWeaponEnemyPool);
         }
     }
@@ -87,11 +86,6 @@ public class EnemyManager : MonoBehaviour
         return false;
     }
 
-    private float NextDeployTime(DeployInfo DI)
-    {
-        return Random.Range(DI.deployDelay - DI.deployDelayRange, DI.deployDelay + DI.deployDelayRange);
-    }
-
     private void DeployEnemy(ObjectPool pool)
     {
         // 表示するlayerはintですから、敵のY座標もintにする、そうしないと変になる
@@ -103,6 +97,7 @@ public class EnemyManager : MonoBehaviour
         {
             enemy.transform.position = startPos;
             enemy.SetManager(this);
+            enemy.SetTarget(player);
             enemy.GetComponent<SortingGroup>().sortingOrder = Mathf.Abs((int)(startPosY - startTopPos.y));
             enemy.Active();
         }

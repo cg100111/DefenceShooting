@@ -10,40 +10,42 @@ public class Enemy : Character
         back
     }
 
-    private Rigidbody2D body;
-    private EnemyManager manager;
-    private Animator animator;
-    private CircleCollider2D attackCollider;
-    private PlayerScript target;
-    private StateManager stateManager;
-    private AudioSource soundPlayer;
+    protected Rigidbody2D body;
+    protected EnemyManager manager;
+    protected Animator animator;
+    protected CircleCollider2D attackCollider;
+    protected PlayerScript target;
+    protected StateManager stateManager;
+    protected AudioSource soundPlayer;
     [SerializeField]
     private AudioClip deathSE;
     [SerializeField]
     private AudioClip[] hitSEList;
+    [SerializeField]
+    private AudioClip attackSE;
 
     /// <summary>
     /// 最大体力
     /// </summary>
     [SerializeField]
-    private float MAX_HP = 100;
+    protected float MAX_HP = 100;
 
     /// <summary>
     /// 体力
     /// </summary>
-    private float HP;
+    protected float HP;
 
     /// <summary>
     /// 移動速度
     /// </summary>
     [SerializeField]
-    private float moveSpeed;
+    protected float moveSpeed;
 
     /// <summary>
     /// 攻撃力
     /// </summary>
     [SerializeField]
-    private float attackPower;
+    protected float attackPower;
 
     /// <summary>
     /// 活動しているか
@@ -83,10 +85,6 @@ public class Enemy : Character
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.T))
-        {
-            Active();
-        }
         stateManager.Update(target);
     }
 
@@ -100,12 +98,12 @@ public class Enemy : Character
         return body;
     }
 
-    public void Move()
+    public virtual void Move()
     {
         body.MovePosition(transform.position + moveSpeed * Time.deltaTime * Vector3.left);
     }
 
-    public void Initialized()
+    public virtual void Initialized()
     {
         HP = MAX_HP;
         CloseAttackCollider();
@@ -113,7 +111,6 @@ public class Enemy : Character
         isHit = false;
         Inactive();
         gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
-        stateManager.ChangeState(new EnemyIdleState(this, stateManager));
     }
 
     public void Active()
@@ -136,18 +133,16 @@ public class Enemy : Character
         this.target = target;
     }
 
-    private void ReduceHP(int damage)
+    protected virtual void ReduceHP(int damage)
     {
         HP -= damage;
         if (HP <= 0.0f)
         {
             HP = 0;
-            stateManager.ChangeState(new EnemyDeathState(this, stateManager));
         }
         else
         {
             isHit = true;
-            stateManager.ChangeState(new EnemyHurtState(this, stateManager));
         }
     }
 
@@ -186,23 +181,22 @@ public class Enemy : Character
             attackCollider.enabled = false;
     }
 
-    public void AttackFinished()
+    public virtual void AttackFinished()
     {
         isAttack = false;
-        stateManager.ChangeState(new EnemyWalkState(this, stateManager));
     }
 
-    public void HitFinished()
+    public virtual void HitFinished()
     {
         isHit = false;
     }
 
-    public void DeathFinished()
+    public virtual void DeathFinished()
     {
         manager.RecycleEnemy(this);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         // 攻撃された
         if (!isHit && collision.gameObject.CompareTag("PlayerBullet"))
