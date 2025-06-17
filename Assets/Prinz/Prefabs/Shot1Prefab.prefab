@@ -110,6 +110,7 @@ MonoBehaviour:
   MINDAMAGEVALUE: 2
   bounceCnt: 1
   ExplosionPrefab: {fileID: 3950369385985302198, guid: 2f8fba854a9018144b4ab6fa0aba8244, type: 3}
+  ExpandingExplosion: {fileID: 3803207988169645065, guid: aff054f4e11e5bd4187d02cd825b7920, type: 3}
 --- !u!50 &-2261713229262906428
 Rigidbody2D:
   serializedVersion: 4
