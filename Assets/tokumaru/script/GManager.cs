@@ -85,14 +85,14 @@ public class GManager : MonoBehaviour
             {
                 case GameScene.Title:
                     LoadSceneTitle();
-                    Debug.Log("titleload");
+                    Debug.Log("titlestart");
                     break;
                 case GameScene.Game:
                     LoadSceneGame();
-                    Debug.Log("GameLoad");
+                    Debug.Log("Gamestart");
                     break; 
                 case GameScene.Ending:
-                    Debug.Log("Ending");
+                    Debug.Log("Endingstart");
                     LoadSceneEnding();
                     break;
                 default:
@@ -183,16 +183,19 @@ public class GManager : MonoBehaviour
             case GameScene.Title:
                 nowScene = GameScene.Game;
                 SceneManager.LoadScene("Game");
+                Debug.Log("GameLoad");
                 break;
             case GameScene.Game:
                 nowScene = GameScene.Ending;
                 UIManager.uiInstance.DestroyUIToGame();
                 SceneManager.LoadScene("Ending");
+                Debug.Log("EndingLoad");
                 break;
             case GameScene.Ending:
                 nowScene = GameScene.Title;
                 ResetScore();
                 SceneManager.LoadScene("Title");
+                Debug.Log("titleload");
                 break;
             default:
                 break;

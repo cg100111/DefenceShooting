@@ -24,7 +24,7 @@ public class CreateBO : MonoBehaviour
         image.color = color;
         button = GameObject.Find("Button");
         countstart = false;
-        if (button != null)
+        if (button)
         {
             pushButton = button.GetComponent<PushButton>();
         }
