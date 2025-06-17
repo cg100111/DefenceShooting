@@ -8,12 +8,11 @@ public class ExpandingExplosion : MonoBehaviour
     public GameObject shotGenerator;
 
     [SerializeField] private float MAXRADIUS = 10.0f;
-    [SerializeField] private float MINRADIUS = 0.0f;
-    [SerializeField] private float expandingSpeed = 0.0f;
+ //   [SerializeField] private float MINRADIUS = 0.0f;
+  //  [SerializeField] private float expandingSpeed = 0.0f;
     [SerializeField] private float MAXTIMER = 0.0f;
 
     private float timer = 0.0f;
-    private float radius = 0.0f;
 
 
 
