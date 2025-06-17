@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class WeaponEnemy : Enemy
 {
+    public override void Awake()
+    {
+        base.Awake();
+        attackCollider = gameObject.GetComponentInChildren<BoxCollider2D>();
+    }
+
     public override void Initialized()
     {
         base.Initialized();

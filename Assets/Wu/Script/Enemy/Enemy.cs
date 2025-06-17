@@ -13,7 +13,7 @@ public class Enemy : Character
     protected Rigidbody2D body;
     protected EnemyManager manager;
     protected Animator animator;
-    protected CircleCollider2D attackCollider;
+    protected Collider2D attackCollider;
     protected PlayerScript target;
     protected StateManager stateManager;
     protected AudioSource soundPlayer;
@@ -67,11 +67,10 @@ public class Enemy : Character
     /// </summary>
     public HitDir hitDir { get; private set; }
 
-    private void Awake()
+    public virtual void Awake()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
-        attackCollider = gameObject.GetComponentInChildren<CircleCollider2D>();
         stateManager = new StateManager();
         soundPlayer = gameObject.GetComponent<AudioSource>();
     }
