@@ -218,4 +218,17 @@ public class Enemy : Character
             isAttack = true;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isHit && collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            if (transform.position.x < collision.transform.position.x)
+                hitDir = HitDir.back;
+            else
+                hitDir = HitDir.front;
+            // get Bullet attack power
+            ReduceHP(Mathf.CeilToInt(MAX_HP));
+        }
+    }
 }
