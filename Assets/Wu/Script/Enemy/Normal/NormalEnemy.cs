@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class NormalEnemy : Enemy
 {
+    public override void Awake()
+    {
+        base.Awake();
+        attackCollider = gameObject.GetComponentInChildren<CircleCollider2D>();
+    }
+
     public override void Initialized()
     {
         base.Initialized();
