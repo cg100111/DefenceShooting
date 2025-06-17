@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,12 +11,12 @@ public class ScoreTextGame : MonoBehaviour
     void Start()
     {
         text = gameObject.GetComponent<TextMeshProUGUI>();
-        text.text = "Œ‚”j” " + GManager.instance.GetSetScore.ToString() + "‘Ì";
+        text.text = "æ’ƒç ´æ•° " + GManager.instance.GetSetScore.ToString() + "ä½“";
     }
 
     // Update is called once per frame
     void Update()
     {
-        text.text = "Œ‚”j” " + GManager.instance.GetSetScore.ToString() + "‘Ì";
+        text.text = "æ’ƒç ´æ•° " + GManager.instance.GetSetScore.ToString() + "ä½“";
     }
 }

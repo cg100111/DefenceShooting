@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,13 +41,13 @@ public class UIManager : MonoBehaviour
     //{
     //    /*scoreUIToEnding = */
     //    Instantiate(scoreUIPrefabToEnding, scoreUITransformToEnding);
-    //    scoreUIToEnding.GetComponent<ScoreText>().SetText("Œ‚”j” " + GManager.instance.GetSetScore.ToString());
+    //    scoreUIToEnding.GetComponent<ScoreText>().SetText("æ’ƒç ´æ•° " + GManager.instance.GetSetScore.ToString());
     //    return scoreUIToEnding;
     //}
 
 
-    //ƒV[ƒ“‚ÉƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚½‚¢ê‡empty‚É
-    //recttransform‚ğ’Ç‰Á‚µ‚½‚à‚Ì‚ğ—pˆÓ‚µ‚Ä‚¨‚­
+    //ã‚·ãƒ¼ãƒ³ã«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ãŸã„å ´åˆemptyã«
+    //recttransformã‚’è¿½åŠ ã—ãŸã‚‚ã®ã‚’ç”¨æ„ã—ã¦ãŠã
     //public void AppearScoreUIToEnding()
     //{
     //    switch (GManager.instance.nowScene)
@@ -76,7 +76,7 @@ public class UIManager : MonoBehaviour
 
         }
         //scoreUIToGame = Instantiate(scoreUIPrefabToGame, test, Quaternion.identity);
-        //scoreUIToGame.GetComponent<ScoreText>().SetText("Œ‚”j” " + GManager.instance.GetSetScore.ToString());
+        //scoreUIToGame.GetComponent<ScoreText>().SetText("æ’ƒç ´æ•° " + GManager.instance.GetSetScore.ToString());
         return scoreUIToGame;
     }
 
