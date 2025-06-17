@@ -12,6 +12,7 @@ public class WeaponEnemyAttackState : BaseState
     {
         Enemy mine = (Enemy)me;
         mine.GetAnimator().CrossFadeInFixedTime("Attack", 0f);
+        mine.PlayAttackSE();
     }
 
     public override void ExitState()
