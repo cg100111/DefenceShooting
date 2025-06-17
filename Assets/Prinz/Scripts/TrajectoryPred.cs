@@ -6,9 +6,9 @@ using UnityEngine;
 public class TrajectoryPred : MonoBehaviour
 {
     [SerializeField] LineRenderer lineRenderer;
-    [SerializeField] int steps = 30;
-    [SerializeField] float timeStep = 0.1f;
-    [SerializeField] float gravity = 9.81f;
+    [SerializeField] int numPoints = 50;
+    [SerializeField] float timeStep = 0.05f;
+   // [SerializeField] float gravity = 9.81f;
     [SerializeField] private GameObject shot1Prefab;
 
 
@@ -27,17 +27,20 @@ public class TrajectoryPred : MonoBehaviour
 
     public void ShowTrajectory(Vector3 startPos, Vector3 velocity)
     {
-        float mass = shot1Prefab.GetComponent<Rigidbody2D>().mass;
-        float adjustedGravity = gravity * mass;
-        Vector3[] points = new Vector3[steps];
-        for (int i = 0; i < steps; i++)
+        Vector3[] points = new Vector3[numPoints];
+        Rigidbody2D bulletRb = shot1Prefab.GetComponent<Rigidbody2D>();
+        float gravity = Physics2D.gravity.y * 2.5f; //なぜこれが正しいか知らんけど、正しい
+
+    //    Debug.Log($"gravity: {Physics2D.gravity.y}, scale: {bulletRb.gravityScale}, total: {Physics2D.gravity.y * bulletRb.gravityScale}");
+        for (int i = 0; i < numPoints; i++)
         {
             float t = i * timeStep;
             Vector3 pos = startPos + velocity * t;
-            pos.y += 0.5f * adjustedGravity * t * t;
+            pos.y += 0.5f * gravity * t * t;
             points[i] = pos;
         }
-        lineRenderer.positionCount = steps;
+
+        lineRenderer.positionCount = numPoints;
         lineRenderer.SetPositions(points);
     }
 
