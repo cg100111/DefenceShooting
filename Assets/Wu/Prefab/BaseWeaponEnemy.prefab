@@ -165,7 +165,7 @@ PrefabInstance:
       addedObject: {fileID: 7845030691812809277}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 5f7d372e57fc28f4baab9ef31f75a4bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8905638016166556714}
+      addedObject: {fileID: 8691293567511295372}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 5f7d372e57fc28f4baab9ef31f75a4bc, type: 3}
 --- !u!1 &2197728809703966535 stripped
 GameObject:
@@ -363,7 +363,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8905638016166556714
+--- !u!114 &8691293567511295372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -372,14 +372,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2197728809703966535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93bb5c2977ebc094ab7d2fe02291ea3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 730c6bfbfa0bece4aa9f14cd566677bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deathSE: {fileID: 8300000, guid: 64a2fbe2a44800a40ab37eb0b303c98c, type: 3}
   hitSEList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: a3c0d2a89df222146903030853ae872f, type: 3}
+  - {fileID: 8300000, guid: 2add33a68c2f26e46a7fed26942208ac, type: 3}
+  - {fileID: 8300000, guid: f149cd75ea37916448a0e32ae3982649, type: 3}
+  attackSE: {fileID: 8300000, guid: 8466d72016ecfbe43ab502218658b7a7, type: 3}
   MAX_HP: 10
   moveSpeed: 20
   attackPower: 2
