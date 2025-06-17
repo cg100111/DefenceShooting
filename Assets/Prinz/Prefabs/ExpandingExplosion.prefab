@@ -100,9 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 3950369385985302198, guid: 2f8fba854a9018144b4ab6fa0aba8244, type: 3}
   shotGenerator: {fileID: 0}
+  MAXRADIUS: 200
   MINRADIUS: 10
   expandingSpeed: 200
-  MAXTIMER: 2
+  MAXTIMER: 1
 --- !u!58 &4622423156829818166
 CircleCollider2D:
   m_ObjectHideFlags: 0

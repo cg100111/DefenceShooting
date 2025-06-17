@@ -7,7 +7,7 @@ public class ExpandingExplosion : MonoBehaviour
     public GameObject explosionPrefab;
     public GameObject shotGenerator;
 
-//    [SerializeField] private float MAXRADIUS;
+    [SerializeField] private float MAXRADIUS = 10.0f;
     [SerializeField] private float MINRADIUS = 0.0f;
     [SerializeField] private float expandingSpeed = 0.0f;
     [SerializeField] private float MAXTIMER = 0.0f;
@@ -31,16 +31,31 @@ public class ExpandingExplosion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > MAXTIMER)
+/*        this.timer += Time.deltaTime;
+        if (this.timer > MAXTIMER)
         {
-            timer = 0.0f;
+            this.timer = 0.0f;
             Destroy(gameObject);
         }
 
-        this.radius = MINRADIUS + expandingSpeed * timer;
+        this.radius = MINRADIUS + expandingSpeed * this.timer;
         Vector3 size = new Vector3(this.radius, this.radius, 0.0f);
-        gameObject.transform.localScale = size;
+        gameObject.transform.localScale = size;*/
+
+
+        if (this.timer < MAXTIMER)
+        {
+            this.timer += Time.deltaTime;
+            float t = Mathf.Clamp01(this.timer / MAXTIMER);
+            float eased = EaseOutQuint(t);
+            float scale = Mathf.Lerp(1f, MAXRADIUS, eased);
+            transform.localScale = new Vector3(scale, scale, 0.0f);
+        }
+        else
+        {
+            this.timer = 0.0f;
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,4 +73,10 @@ public class ExpandingExplosion : MonoBehaviour
             }
         }
     }
+
+    float EaseOutQuint(float t)
+    {
+        return 1 - Mathf.Pow(1 - t, 5);
+    }
+
 }
