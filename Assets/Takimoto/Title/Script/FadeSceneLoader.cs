@@ -34,6 +34,6 @@ public class FadeSceneLoader : MonoBehaviour
         }
 
         fadePanel.color = endColor; //フェードが終了したら最終色に設定
-        SceneManager.LoadScene("Game");
+        GManager.instance.SceneChange();
     }
 }
