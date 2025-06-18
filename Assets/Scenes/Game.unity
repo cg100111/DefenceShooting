@@ -1087,7 +1087,7 @@ MonoBehaviour:
   SEExplosion: []
   MAXPOWER: 100
   MAXDAMAGE: 10
-  MAXCHARGETIMER: 2
+  MAXCHARGETIMER: 5
   MINSPEED: 30
 --- !u!4 &903049901
 Transform:
@@ -6925,7 +6925,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 3.403, y: -90, z: 90}
 --- !u!1 &1449075556
 GameObject:
