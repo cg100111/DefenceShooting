@@ -103,7 +103,7 @@ public class GManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            UnityEditor.EditorApplication.isPlaying = false;
+            //UnityEditor.EditorApplication.isPlaying = false;
             Application.Quit();
         }
     }
