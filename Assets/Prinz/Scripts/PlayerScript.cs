@@ -7,10 +7,15 @@ using UnityEngine.UI;
 public class PlayerScript : Character
 {
     public Image BarHPCurrent;
+
     public FadeSceneLoader fadeSceneLoader;
+    public GameObject ExplosionPrefab;
+    public GameObject BarHPBase;
+    public GameObject BarPowerBase;
+    public GameObject BarPowerCurrent;
+
     public float HP = 100.0f;
     private const float MAXHP = 100.0f;
-    [SerializeField] private float timerEndingTransition = 3.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +26,10 @@ public class PlayerScript : Character
     // Update is called once per frame
     void Update()
     {
-        //   testTime -= Time.deltaTime;
-        //   HP = testTime;
-        BarHPCurrent.fillAmount = Mathf.Clamp01(this.HP / MAXHP);
+        if (BarHPCurrent != null)
+        {      
+            BarHPCurrent.fillAmount = Mathf.Clamp01(this.HP / MAXHP);
+        }
     }
 
     private void ReduceHP(float amount)
@@ -31,26 +37,37 @@ public class PlayerScript : Character
         this.HP = Mathf.Max(0, this.HP - amount);
         if(this.HP <= 0)
         {
+            //エンディングシーンに切り替え
+            StartCoroutine(DeathAnimation());
             fadeSceneLoader.CallCoroutine();
-            //EndingSceneTransition(); //エンディングシーンの切り替え
         }    
     }
 
-    private void EndingSceneTransition()
+    IEnumerator DeathAnimation()
     {
-        //while (timerEndingTransition > 0)
-        //{
-        //    timerEndingTransition -= Time.deltaTime;
-        //    if(timerEndingTransition <= 0)
-        //    {
-        //        break;
-        //    }
-        //    yield return null; // wait for next frame
-        //}
+     //   this.BarHPCurrent..gameObject.SetActive(false);
+        BarHPBase.SetActive(false);
+     //   BarPowerBase.SetActive(false);
+      //  BarPowerCurrent.SetActive(false);
 
-        
+        float timer = fadeSceneLoader.fadeDuration - 0.5f;
+        int cnt = 0;
+        while (timer > 0)
+        {
+            cnt++;
+            if (cnt % 5 == 0)
+            {
+                int randX = Random.Range(-50, 0);
+                int randY = Random.Range(-50, +50);
+                int randScale = Random.Range(10, 50);
 
-     //   SceneManager.LoadScene("EndingScene"); //タイマーが終わったら、エンディングに切り替える
+                Vector3 exploPos = new Vector3 (randX, randY, 0);
+                ExplosionPrefab.transform.localScale = new Vector3(randScale, randScale, 0);
+                Instantiate(ExplosionPrefab, exploPos, Quaternion.identity);
+            }
+            yield return null; // wait for next frame
+        }
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
