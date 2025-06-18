@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerScript : Character
 {
     public Image BarHPCurrent;
+    public FadeSceneLoader fadeSceneLoader;
     public float HP = 100.0f;
     private const float MAXHP = 100.0f;
     [SerializeField] private float timerEndingTransition = 3.0f;
@@ -30,23 +31,24 @@ public class PlayerScript : Character
         this.HP = Mathf.Max(0, this.HP - amount);
         if(this.HP <= 0)
         {
-            StartCoroutine(EndingSceneTransition()); //エンディングシーンの切り替え
+            fadeSceneLoader.CallCoroutine();
+            //EndingSceneTransition(); //エンディングシーンの切り替え
         }    
     }
 
-    IEnumerator EndingSceneTransition()
+    private void EndingSceneTransition()
     {
-        while (timerEndingTransition > 0)
-        {
-            timerEndingTransition -= Time.deltaTime;
-            if(timerEndingTransition <= 0)
-            {
-                break;
-            }
-            yield return null; // wait for next frame
-        }
-        //GetComponent<GManager>().SceneChange();
-        GManager.instance.SceneChange();
+        //while (timerEndingTransition > 0)
+        //{
+        //    timerEndingTransition -= Time.deltaTime;
+        //    if(timerEndingTransition <= 0)
+        //    {
+        //        break;
+        //    }
+        //    yield return null; // wait for next frame
+        //}
+
+        
 
      //   SceneManager.LoadScene("EndingScene"); //タイマーが終わったら、エンディングに切り替える
     }
@@ -59,9 +61,12 @@ public class PlayerScript : Character
             if(enemy != null)
             {
                 float damage = enemy.GetAttackPower();
-                ReduceHP(damage);
-                Debug.Log($"Damage : {damage}");
-                Debug.Log($"player hp : {this.HP}");
+                if(this.HP > 0)
+                {
+                    ReduceHP(damage);
+                    Debug.Log($"Damage : {damage}");
+                    Debug.Log($"player hp : {this.HP}");
+                }
             }
             else
             {

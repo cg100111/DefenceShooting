@@ -908,7 +908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 923464957}
   countstart: 0
-  addAlpha: 0.1
+  addAlpha: 0.005
 --- !u!114 &923464957
 MonoBehaviour:
   m_ObjectHideFlags: 0
