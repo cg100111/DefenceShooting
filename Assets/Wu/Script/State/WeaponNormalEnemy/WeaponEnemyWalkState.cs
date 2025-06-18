@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,14 +20,14 @@ public class WeaponEnemyWalkState : BaseState
     public override void UpdateState(Character target)
     {
         Enemy mine = (Enemy)me;
-        // UŒ‚
+        // æ”»æ’ƒ
         if (mine.isAttack)
         {
             manager.ChangeState(new WeaponEnemyAttackState(me, manager));
             return;
         }
 
-        // ˆÚ“®
+        // ç§»å‹•
         if (mine.IsAlive())
         {
             mine.Move();
