@@ -140,6 +140,7 @@ public class Enemy : Character
         if (HP <= 0.0f)
         {
             HP = 0;
+            gManager.GetSetScore = 1;
         }
         else
         {
@@ -200,7 +201,6 @@ public class Enemy : Character
 
     public virtual void DeathFinished()
     {
-        gManager.GetSetScore = 1;
         manager.RecycleEnemy(this);
     }
 
