@@ -100,6 +100,12 @@ public class GManager : MonoBehaviour
                     break;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Application.Quit();
+        }
     }
 
     //それぞれのシーンにゲームマネージャーから追加するものの初期化処理
@@ -201,6 +207,7 @@ public class GManager : MonoBehaviour
                 break;
         }
         sceneChange = true;
+
     }
 
 }
