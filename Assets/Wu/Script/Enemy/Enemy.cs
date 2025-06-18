@@ -136,10 +136,14 @@ public class Enemy : Character
 
     protected virtual void ReduceHP(int damage)
     {
+        if (HP <= 0.0f)
+            return;
+
         HP -= damage;
         if (HP <= 0.0f)
         {
             HP = 0;
+            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             gManager.GetSetScore = 1;
         }
         else
@@ -230,12 +234,9 @@ public class Enemy : Character
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        // 爆発攻撃を受ける
         if (!isHit && collision.gameObject.CompareTag("PlayerBullet"))
         {
-            if (transform.position.x < collision.transform.position.x)
-                hitDir = HitDir.back;
-            else
-                hitDir = HitDir.front;
             // get Bullet attack power
             ReduceHP(Mathf.CeilToInt(MAX_HP));
         }
