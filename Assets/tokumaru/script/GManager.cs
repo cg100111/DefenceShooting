@@ -188,7 +188,7 @@ public class GManager : MonoBehaviour
             case GameScene.Game:
                 nowScene = GameScene.Ending;
                 UIManager.uiInstance.DestroyUIToGame();
-                SceneManager.LoadScene("Ending");
+                SceneManager.LoadScene("EndingScene");
                 Debug.Log("EndingLoad");
                 break;
             case GameScene.Ending:
