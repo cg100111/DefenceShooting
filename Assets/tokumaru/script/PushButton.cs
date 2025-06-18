@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +8,7 @@ public class PushButton : MonoBehaviour
 {
     public Image image;
     public Animator animator;
-    public AudioClip push;//•K—v‚È‚¢‚©‚à
+    public AudioClip push;//å¿…è¦ãªã„ã‹ã‚‚
     AudioSource audioSouce;
     Color color;
     bool pushButton;
