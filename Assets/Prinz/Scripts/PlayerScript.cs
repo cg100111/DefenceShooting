@@ -45,7 +45,10 @@ public class PlayerScript : Character
             }
             yield return null; // wait for next frame
         }
-        SceneManager.LoadScene("EndingScene"); //タイマーが終わったら、エンディングに切り替える
+        //GetComponent<GManager>().SceneChange();
+        GManager.instance.SceneChange();
+
+     //   SceneManager.LoadScene("EndingScene"); //タイマーが終わったら、エンディングに切り替える
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -1,5 +1,5 @@
-//https://zenn.dev/daichi_gamedev/articles/unity-fadeout
-//Ql‚É‚µ‚½ƒTƒCƒg
+ï»¿//https://zenn.dev/daichi_gamedev/articles/unity-fadeout
+//å‚è€ƒã«ã—ãŸã‚µã‚¤ãƒˆ
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class FadeSceneLoader : MonoBehaviour
 {
-    public Image fadePanel; //ƒtƒF[ƒh—p‚ÌUIƒpƒlƒ‹
-    public float fadeDuration = 1.0f; //ƒtƒF[ƒh‚ªI‚í‚é‚Ü‚Å‚É‚©‚©‚éŠÔ
+    public Image fadePanel; //ãƒ•ã‚§ãƒ¼ãƒ‰ç”¨ã®UIãƒ‘ãƒãƒ«
+    public float fadeDuration = 1.0f; //ãƒ•ã‚§ãƒ¼ãƒ‰ãŒçµ‚ã‚ã‚‹ã¾ã§ã«ã‹ã‹ã‚‹æ™‚é–“
 
     public void CallCoroutine()
     { 
@@ -19,21 +19,21 @@ public class FadeSceneLoader : MonoBehaviour
 
     public IEnumerator FadeOutAndLoadScene()
     {
-        fadePanel.enabled = true; //ƒpƒlƒ‹‚ğ—LŒø‰»
-        float elapsedTime = 0.0f; //Œo‰ßŠÔ‚ğ‰Šú‰»
-        Color startColor = fadePanel.color; //ƒtƒF[ƒhƒpƒlƒ‹‚ÌŠJnF‚ğæ“¾
-        Color endColor = new Color(startColor.r, startColor.g, startColor.b, 1.0f); //ƒtƒF[ƒhƒpƒlƒ‹‚ÌÅIF‚ğİ’è
+        fadePanel.enabled = true; //ãƒ‘ãƒãƒ«ã‚’æœ‰åŠ¹åŒ–
+        float elapsedTime = 0.0f; //çµŒéæ™‚é–“ã‚’åˆæœŸåŒ–
+        Color startColor = fadePanel.color; //ãƒ•ã‚§ãƒ¼ãƒ‰ãƒ‘ãƒãƒ«ã®é–‹å§‹è‰²ã‚’å–å¾—
+        Color endColor = new Color(startColor.r, startColor.g, startColor.b, 1.0f); //ãƒ•ã‚§ãƒ¼ãƒ‰ãƒ‘ãƒãƒ«ã®æœ€çµ‚è‰²ã‚’è¨­å®š
 
-        //ƒtƒF[ƒhƒAƒEƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğÀs
+        //ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å®Ÿè¡Œ
         while(elapsedTime < fadeDuration)
         {
-            elapsedTime += Time.deltaTime; //Œo‰ßŠÔ‚ğ‘‚â‚·
-            float t = Mathf.Clamp01(elapsedTime / fadeDuration); //ƒtƒF[ƒh‚Ìis“x‚ğŒvZ
-            fadePanel.color = Color.Lerp(startColor, endColor, t); //ƒpƒlƒ‹‚ÌF‚ğ•ÏX‚µ‚ÄƒtƒF[ƒhƒAƒEƒg
-            yield return null; //1ƒtƒŒ[ƒ€‘Ò‹@
+            elapsedTime += Time.deltaTime; //çµŒéæ™‚é–“ã‚’å¢—ã‚„ã™
+            float t = Mathf.Clamp01(elapsedTime / fadeDuration); //ãƒ•ã‚§ãƒ¼ãƒ‰ã®é€²è¡Œåº¦ã‚’è¨ˆç®—
+            fadePanel.color = Color.Lerp(startColor, endColor, t); //ãƒ‘ãƒãƒ«ã®è‰²ã‚’å¤‰æ›´ã—ã¦ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
+            yield return null; //1ãƒ•ãƒ¬ãƒ¼ãƒ å¾…æ©Ÿ
         }
 
-        fadePanel.color = endColor; //ƒtƒF[ƒh‚ªI—¹‚µ‚½‚çÅIF‚Éİ’è
+        fadePanel.color = endColor; //ãƒ•ã‚§ãƒ¼ãƒ‰ãŒçµ‚äº†ã—ãŸã‚‰æœ€çµ‚è‰²ã«è¨­å®š
         GManager.instance.SceneChange();
     }
 }

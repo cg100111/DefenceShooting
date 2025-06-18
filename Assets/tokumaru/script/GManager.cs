@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,13 +8,13 @@ using UnityEngine.UI;
 public class GManager : MonoBehaviour
 {
 
-    //ŠO‘¤‚©‚çg‚¦‚é
-    //QÆ‚ª—‚Ü‚Á‚Ä‚é
-    //GManager.instance.”CˆÓ‚ÌŠÖ”E•Ï”
-    //GManager.GameScene.GameScene‚Ì”CˆÓ‚ÌƒV[ƒ“
-    //GManager.GameScene.GetSetScene‚Å æ“¾E“ü‚ê‘Ö‚¦‰Â”\GetSetScene‚Ì•”•ª‚ğ•Ï‚¦‚é‚Æ•Ê‚Ì•Ï”‚àæ“¾“ü‚ê‘Ö‚¦‰Â”\@¡‚Ì‚Æ‚±‚ëscene‚Æscore‚Ì‚İ
-    //GManager.GameScene.SceneChange()@ƒV[ƒ“‚Ìƒ[ƒh‚±‚ê‚Åƒ[ƒh‚·‚é‚Æ
-    //GManager‚©‚ço‚·‚à‚Ì‚ª‚ ‚ê‚Î‚»‚ê‚Ì‰Šú‰»ˆ—‚ğs‚¤
+    //å¤–å´ã‹ã‚‰ä½¿ãˆã‚‹
+    //å‚ç…§ãŒçµ¡ã¾ã£ã¦ã‚‹
+    //GManager.instance.ä»»æ„ã®é–¢æ•°ãƒ»å¤‰æ•°
+    //GManager.GameScene.GameSceneã®ä»»æ„ã®ã‚·ãƒ¼ãƒ³
+    //GManager.GameScene.GetSetSceneã§ å–å¾—ãƒ»å…¥ã‚Œæ›¿ãˆå¯èƒ½GetSetSceneã®éƒ¨åˆ†ã‚’å¤‰ãˆã‚‹ã¨åˆ¥ã®å¤‰æ•°ã‚‚å–å¾—å…¥ã‚Œæ›¿ãˆå¯èƒ½ã€€ä»Šã®ã¨ã“ã‚sceneã¨scoreã®ã¿
+    //GManager.GameScene.SceneChange()ã€€ã‚·ãƒ¼ãƒ³ã®ãƒ­ãƒ¼ãƒ‰ã“ã‚Œã§ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã¨
+    //GManagerã‹ã‚‰å‡ºã™ã‚‚ã®ãŒã‚ã‚Œã°ãã‚Œã®åˆæœŸåŒ–å‡¦ç†ã‚’è¡Œã†
     public enum GameScene
     {
         Title,
@@ -62,7 +62,7 @@ public class GManager : MonoBehaviour
         set { nowScene = value;}
     }
 
-    //ƒXƒRƒA‚Ìæ“¾E‰ÁZ
+    //ã‚¹ã‚³ã‚¢ã®å–å¾—ãƒ»åŠ ç®—
     public int GetSetScore
     {
         get { return score; }
@@ -102,7 +102,7 @@ public class GManager : MonoBehaviour
         }
     }
 
-    //‚»‚ê‚¼‚ê‚ÌƒV[ƒ“‚ÉƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[‚©‚ç’Ç‰Á‚·‚é‚à‚Ì‚Ì‰Šú‰»ˆ—
+    //ãã‚Œãã‚Œã®ã‚·ãƒ¼ãƒ³ã«ã‚²ãƒ¼ãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰è¿½åŠ ã™ã‚‹ã‚‚ã®ã®åˆæœŸåŒ–å‡¦ç†
     void LoadSceneTitle()
     {
         if (sceneChange)
@@ -163,7 +163,7 @@ public class GManager : MonoBehaviour
         return false;
     }
 
-    //ƒXƒRƒA‚ÌƒŠƒZƒbƒg
+    //ã‚¹ã‚³ã‚¢ã®ãƒªã‚»ãƒƒãƒˆ
     public void ResetScore()
     {
         score = 0;
@@ -175,7 +175,7 @@ public class GManager : MonoBehaviour
     }
 
 
-    //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦‚ğs‚¤Aƒ}ƒl[ƒWƒƒ[‚©‚ç’Ç‰Á‚µ‚½‚à‚Ì‚Ìíœ‚à‚±‚±‚Ås‚¤Bi‚ ‚ê‚Îj
+    //ã‚·ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆã‚’è¡Œã†ã€ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰è¿½åŠ ã—ãŸã‚‚ã®ã®å‰Šé™¤ã‚‚ã“ã“ã§è¡Œã†ã€‚ï¼ˆã‚ã‚Œã°ï¼‰
     public void SceneChange()
     {
         switch (nowScene)

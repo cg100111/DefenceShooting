@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +19,7 @@ public class ScoreText : MonoBehaviour
         color = text.color;
         color.a = 0.0f;
         text.color = color;
-        text.text = "åÇîjêî " + GManager.instance.GetSetScore.ToString() + "ëÃ";
+        text.text = "ÊíÉÁ†¥Êï∞ " + GManager.instance.GetSetScore.ToString() + "‰Ωì";
     }
 
     // Update is called once per frame
