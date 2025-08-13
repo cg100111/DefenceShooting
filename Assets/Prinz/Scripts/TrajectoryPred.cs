@@ -29,7 +29,7 @@ public class TrajectoryPred : MonoBehaviour
     {
         Vector3[] points = new Vector3[numPoints];
         Rigidbody2D bulletRb = shot1Prefab.GetComponent<Rigidbody2D>();
-        float gravity = Physics2D.gravity.y * 2.5f; //なぜこれが正しいか知らんけど、正しい
+        float gravity = Physics2D.gravity.y * 2.5f; //なぜ2.5ｆは正しいか分からないが、そうしないと連れてしまう
 
     //    Debug.Log($"gravity: {Physics2D.gravity.y}, scale: {bulletRb.gravityScale}, total: {Physics2D.gravity.y * bulletRb.gravityScale}");
         for (int i = 0; i < numPoints; i++)
