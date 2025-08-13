@@ -45,10 +45,7 @@ public class PlayerScript : Character
 
     IEnumerator DeathAnimation()
     {
-     //   this.BarHPCurrent..gameObject.SetActive(false);
         BarHPBase.SetActive(false);
-     //   BarPowerBase.SetActive(false);
-      //  BarPowerCurrent.SetActive(false);
 
         float timer = fadeSceneLoader.fadeDuration - 0.5f;
         int cnt = 0;
@@ -65,7 +62,7 @@ public class PlayerScript : Character
                 ExplosionPrefab.transform.localScale = new Vector3(randScale, randScale, 0);
                 Instantiate(ExplosionPrefab, exploPos, Quaternion.identity);
             }
-            yield return null; // wait for next frame
+            yield return null; // 次のフレームを待つ
         }
         gameObject.SetActive(false);
     }

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Shot1Script : MonoBehaviour
 {
-    float timer = 0.0f; //bullet timer
-    const float MAXTIMER = 10.0f; //bullet max timer
+    float timer = 0.0f;
+    const float MAXTIMER = 10.0f;
     public AudioClip[] SEbounce;
     AudioSource aud;
 
@@ -47,10 +47,10 @@ public class Shot1Script : MonoBehaviour
         {
             //当たり判定
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (rb != null /*&& enemy state active*/)
+            if (rb != null)
             {
                 Vector2 knockback = collision.transform.position - transform.position;
-                rb.AddForce(knockback.normalized * 10000f); // adjust force value
+                rb.AddForce(knockback.normalized * 10000f); // 力量の値を調整
                 if (this.isMaxPower)
                 {
                     Instantiate(ExpandingExplosion, this.transform.position, ExpandingExplosion.transform.rotation);
@@ -60,14 +60,12 @@ public class Shot1Script : MonoBehaviour
                 {
                     ExplosionPrefab.transform.localScale = new Vector3(20, 20, 0);
                     Instantiate(ExplosionPrefab, this.transform.position, ExplosionPrefab.transform.rotation);
-                //    generator?.PlaySEexplosion(); // play SE safely
-                    //弾消滅
-                    Destroy(gameObject);
+                    Destroy(gameObject); // 弾消滅
                 }
                 else
                 {
                     this.bounceCnt--;
-                    int randomSE = Random.Range(0, SEbounce.Length); // Random index 0 to 2
+                    int randomSE = Random.Range(0, SEbounce.Length); // サウンドエフェクトをランダムで決める（音疲労防止のために）
                     aud.PlayOneShot(SEbounce[randomSE]);
                 }
             }

@@ -8,8 +8,8 @@ public class ExpandingExplosion : MonoBehaviour
     public GameObject shotGenerator;
 
     [SerializeField] private float MAXRADIUS = 10.0f;
- //   [SerializeField] private float MINRADIUS = 0.0f;
-  //  [SerializeField] private float expandingSpeed = 0.0f;
+//  [SerializeField] private float MINRADIUS = 0.0f;
+//  [SerializeField] private float expandingSpeed = 0.0f;
     [SerializeField] private float MAXTIMER = 0.0f;
 
     private float timer = 0.0f;
@@ -23,25 +23,13 @@ public class ExpandingExplosion : MonoBehaviour
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color c = sr.color;
-        c.a = 0.5f;  // 50% transparency
+        c.a = 0.5f;  // 50%の透明性
         sr.color = c;
     }
 
     // Update is called once per frame
     void Update()
     {
-/*        this.timer += Time.deltaTime;
-        if (this.timer > MAXTIMER)
-        {
-            this.timer = 0.0f;
-            Destroy(gameObject);
-        }
-
-        this.radius = MINRADIUS + expandingSpeed * this.timer;
-        Vector3 size = new Vector3(this.radius, this.radius, 0.0f);
-        gameObject.transform.localScale = size;*/
-
-
         if (this.timer < MAXTIMER)
         {
             this.timer += Time.deltaTime;
@@ -63,7 +51,7 @@ public class ExpandingExplosion : MonoBehaviour
         {
             //当たり判定
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (rb != null /*&& enemy state active*/)
+            if (rb != null)
             {
                 int randSize = Random.Range(15, 50);
                 explosionPrefab.transform.localScale = new Vector3(randSize, randSize, 0);

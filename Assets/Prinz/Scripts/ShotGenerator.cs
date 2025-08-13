@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +9,7 @@ public class ShotGenerator : MonoBehaviour
 {
     public GameObject   Shot1Prefab;
     [SerializeField] private TrajectoryPred trajectory;
-    [SerializeField] private Transform shotSpawnPoint; // Reference to where the shot spawns
+    [SerializeField] private Transform shotSpawnPoint;
 
 
     public Image        BarPowerCurrent;
@@ -58,7 +57,8 @@ public class ShotGenerator : MonoBehaviour
     IEnumerator ChargeAndFire()
     {
         float power = 0.0f;
-        BarPowerCurrent.gameObject.SetActive(true); // show bars
+        // バーを表示する
+        BarPowerCurrent.gameObject.SetActive(true); 
         BarPowerBase.gameObject.SetActive(true);
 
         //shotGeneratorを見つける
@@ -70,7 +70,6 @@ public class ShotGenerator : MonoBehaviour
         if (Input.GetMouseButtonDown(1))  //debug
         {
 
-
         }
 
  
@@ -78,11 +77,11 @@ public class ShotGenerator : MonoBehaviour
         {
             //位置を毎フレーム計算
             //弾の位置を計算
-            Vector3 mp = Input.mousePosition;                       //take mouse position
-            mp.z = 60.0f - Camera.main.transform.position.z;                    //align mouse position in the Z axis
-            Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mp);  //make target's coordinates
-            worldMousePos.z = 60.0f;                                                 //ensure the Z alignment
-            this.shotSpawnPos = shotgen.transform.position;      //give initial position to shot
+            Vector3 mp = Input.mousePosition;                           //マウス位置を取得
+            mp.z = 60.0f - Camera.main.transform.position.z;            //マウスの位置をZ軸に合わせる
+            Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mp); //狙っているところの座標を取得
+            worldMousePos.z = 60.0f;                                    //Z軸に合わせる
+            this.shotSpawnPos = shotgen.transform.position;             //ショットに初期位置を与える
 
 
 
@@ -100,7 +99,7 @@ public class ShotGenerator : MonoBehaviour
                 this.isMaxPower = true;
                 break;
             }
-            yield return null; // wait for next frame
+            yield return null; // 次のフレームを待つ
         }
 
         //バーと軌道予測線のリセットと非表示
